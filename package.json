@@ -1,0 +1,20 @@
+{
+  "name": "QNN-Stores",
+  "version": "0.0.1",
+  "private": true,
+  "description": "A management tool for QNN stores. This tool also provides API to find the nearest stores.",
+  "author": "caiguanhao <caiguanhao@gmail.com>",
+  "license": "The BSD 3-Clause License",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qnn/qnn-stores.git"
+  },
+  "dependencies": {
+    "express": "3.3.8",
+    "jade": "*",
+    "stylus": "*"
+  }
+}
