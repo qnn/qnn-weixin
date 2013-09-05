@@ -1,8 +1,4 @@
-
-/*
- * GET home page.
- */
-
 exports.index = function(req, res){
-  res.render('index', { title: 'QNN-Stores' });
+  stores_list = require('../stores.json');
+  res.render('index', { stores: stores_list });
 };

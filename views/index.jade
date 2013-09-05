@@ -1,5 +1,16 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  - var sizes = [20, 5, 60, 18, 8, 15]
+  - each cities, province in stores_list
+    - each stores, city in cities
+      p #{province}::#{city}
+      - each store in stores
+        p
+        - each value, index in store
+          - if(typeof value === 'boolean')
+            select
+              option yes
+              option no
+          - else
+            input(value=value, size=sizes[index])
