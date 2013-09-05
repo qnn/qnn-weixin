@@ -2,6 +2,16 @@ doctype 5
 html
   head
     title= title
+    link(rel='stylesheet', href='/vendor/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/vendor/stylesheets/bootstrap.theme.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    nav.navbar.navbar-default(role='navigation')
+      .container
+          .navbar-header
+            a.navbar-brand(href='/') 销售网点管理工具
+          .collapse.navbar-collapse.navbar-ex1-collapse
+            ul.nav.navbar-nav
+              li
+                a(href='/stores') 所有网点
     block content

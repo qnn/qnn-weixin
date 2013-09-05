@@ -1,8 +1,18 @@
 extends layout
 
 block content
-  .coord
-    input
-    button 获取我的坐标
-  .find
-    button 寻找离我最近的全能销售网点
+  article.container(role='main')
+    .col-md-offset-3.col-md-6
+      .panel.panel-default
+        .panel-heading 寻找离我最近的全能销售网点
+        .panel-body
+          .row.form-group
+            .col-xs-6
+              input.text-right.form-control(type='text', placeholder='十进制纬度')
+            .col-xs-6
+              input.text-left.form-control(type='text', placeholder='十进制经度')
+          .row.form-group
+            .col-xs-6.text-right
+              button.btn.btn-default(type='button') 我当前的坐标
+            .col-xs-6.text-left
+              button.btn.btn-default(type='button') 列出销售网点
