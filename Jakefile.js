@@ -35,9 +35,18 @@ task('coord', function(){
       res.on('end', function(){
         body = JSON.parse(body);
         if (body.hasOwnProperty('content')) {
-          var coordinates = coord.parse_geostring(body['content'][0]['geo']);
-          stores_list[__[0]][__[1]][__[2]] = stores_list[__[0]][__[1]][__[2]].concat(coordinates);
-          save_stores_list();
+          var coordinates;
+          if (body['content'] instanceof Array) {
+            coordinates = coord.parse_geostring(body['content'][0]['geo']);
+          } else {
+            coordinates = coord.parse_geostring(body['content']['geo']);
+          }
+          if (coordinates == null) {
+            console.log('WARNING: No coords returned for address: ' + address);
+          } else {
+            stores_list[__[0]][__[1]][__[2]] = stores_list[__[0]][__[1]][__[2]].concat(coordinates);
+            save_stores_list();
+          }
         } else {
           address = address.slice(0,-1)
           find_coordinates_to_address(address, __);
@@ -55,7 +64,7 @@ task('coord', function(){
         if (!has_coordinates(store)) {
           var address = normalize_address(province + (province != city ? city : '') + store[1] + store[2]);
           find_coordinates_to_address(address, [province, city, i]);
-          break loop_p;
+          //break loop_p; //if you want to try one
         }
       }
     }
