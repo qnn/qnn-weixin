@@ -4,6 +4,7 @@
  */
 
 var express = require('express');
+var index = require('./routes');
 var stores = require('./routes/stores');
 var http = require('http');
 var path = require('path');
@@ -27,6 +28,7 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+app.get('/', index.index);
 app.get('/stores', stores.list_all);
 
 http.createServer(app).listen(app.get('port'), function(){
