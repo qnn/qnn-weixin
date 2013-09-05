@@ -8,11 +8,11 @@ block content
         .panel-body
           .row.form-group
             .col-xs-6
-              input.text-right.form-control(type='text', placeholder='十进制纬度')
+              input#coord-lat.text-right.form-control(type='text', placeholder='十进制纬度')
             .col-xs-6
-              input.text-left.form-control(type='text', placeholder='十进制经度')
+              input#coord-lng.text-left.form-control(type='text', placeholder='十进制经度')
           .row.form-group
             .col-xs-6.text-right
-              button.btn.btn-default(type='button') 我当前的坐标
+              button#get_my_coord.btn.btn-default(type='button') 我当前的坐标
             .col-xs-6.text-left
               button.btn.btn-default(type='button') 列出销售网点
