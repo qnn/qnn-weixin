@@ -16,6 +16,8 @@ task('coord', function(){
     return address.replace(/[\(（,，\/].*$/, '');
   }
 
+  var coord = require('./lib/coord.js');
+
   function find_coordinates_to_address(address) {
     if (address.length == 0) return;
     var http = require('http');
@@ -25,7 +27,7 @@ task('coord', function(){
       res.on('end', function(){
         body = JSON.parse(body);
         if (body.hasOwnProperty('content')) {
-          console.log(body['content'][0]['geo']);
+          console.log(coord.parse_geostring(body['content'][0]['geo']));
         } else {
           address = address.slice(0,-1)
           find_coordinates_to_address(address);
