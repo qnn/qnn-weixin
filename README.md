@@ -33,7 +33,33 @@ Nginx configurations:
       }
     }
 
-Start Node:
+Install dependencies for the first time:
 
-    export NODE_ENV=production
-    forever start app.js
+    npm install
+
+Start Node in Production Mode with Forever:
+
+    jake start
+
+In Development Mode:
+
+    nodemon app.js
+
+To see more jake tasks, run ``jake``.
+
+Global Modules
+--------------
+
+* jake (``npm install -g jake``)
+* forever
+* nodemon (used in development mode)
+
+Find coordinates
+----------------
+
+Simply run ``jake coord`` to automatically query Baidu Maps for coordinates to those addresses without coordinates in ``stores.json`` and save them.
+
+Developer
+---------
+
+* caiguanhao &lt;caiguanhao@gmail.com&gt;
