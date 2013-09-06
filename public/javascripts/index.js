@@ -31,14 +31,18 @@ $(function(){
   });
   var list_nearby_stores_text = $('#list_nearby_stores').text();
   $('#list_nearby_stores').on('click', function(){
+    $('#list_nearby_stores').text('正在列出销售网点...').prop('disabled', true);
+    var resume_button = function() { $('#list_nearby_stores').text(list_nearby_stores_text).prop('disabled', false); }
     var lat = $('#coord-lat').val(), lng = $('#coord-lng').val();
     $.getJSON('/api/stores', { lat: lat, lng: lng }, function(data){
+      resume_button();
+      $('#stores_list tbody').empty();
       $.each(data.stores, function(a, b){
         $('#stores_list tbody').append('<tr><td>' + (a + 1) + '</td><td>' +
-          b[0] + '</td><td>' + b[4] + '</td><td>' + b[9] + ', ' + b[10] + '</td><td>' +
-          b[11] + '</td></tr>')
+          b[0] + '</td><td>' + b[4] + '</td><td>' + b[9].toFixed(6) + ', ' +
+          b[10].toFixed(6) + '</td><td>' + b[11].toFixed(3) + '</td></tr>')
       });
       $('#results').removeClass('hidden');
-    })
+    });
   });
 });

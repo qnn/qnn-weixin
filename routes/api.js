@@ -18,6 +18,7 @@ exports.stores = function(req, res){  // sort by distance
         var lat = stores_list[i][9];
         var lng = stores_list[i][10];
         var distance = coord.distance_between_coordinates(latitude, longitude, lat, lng);
+        distance = +(distance).toFixed(3);
         stores_list[i].push(distance);
       }
 
