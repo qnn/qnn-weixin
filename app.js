@@ -42,6 +42,9 @@ app.get('/weixin/bridge', weixin.bridge)
 
 app.get('/api/stores', api.stores);
 
+var PID_FILE = __dirname + '/tmp/pids/forever.pid';
+
 http.createServer(app).listen(app.get('port'), function(){
+  require('fs').chmodSync(PID_FILE, 666); // some system need this to work right;
   console.log('Express server listening on port ' + app.get('port'));
 });
