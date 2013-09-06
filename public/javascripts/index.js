@@ -24,9 +24,21 @@ $(function(){
             alert('发生了未知的错误。');
             break;
         }
-      }, { timeout: 5000 });
+      }, { enableHighAccuracy: true, timeout: 5000 });
     } else {
       alert('你的浏览器太旧了，不支持获取坐标，请用最新版浏览器。');
     }
+  });
+  var list_nearby_stores_text = $('#list_nearby_stores').text();
+  $('#list_nearby_stores').on('click', function(){
+    var lat = $('#coord-lat').val(), lng = $('#coord-lng').val();
+    $.getJSON('/api/stores', { lat: lat, lng: lng }, function(data){
+      $.each(data.stores, function(a, b){
+        $('#stores_list tbody').append('<tr><td>' + (a + 1) + '</td><td>' +
+          b[0] + '</td><td>' + b[4] + '</td><td>' + b[9] + ', ' + b[10] + '</td><td>' +
+          b[11] + '</td></tr>')
+      });
+      $('#results').removeClass('hidden');
+    })
   });
 });

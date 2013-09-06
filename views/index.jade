@@ -15,4 +15,16 @@ block content
             .col-xs-6.text-right
               button#get_my_coord.btn.btn-default(type='button') 我当前的坐标
             .col-xs-6.text-left
-              button.btn.btn-default(type='button') 列出销售网点
+              button#list_nearby_stores.btn.btn-default(type='button') 列出销售网点
+    #results.col-md-offset-2.col-md-8.hidden
+      .panel.panel-default
+        .panel-heading 离我最近的全能销售网点
+        table#stores_list.table.table-hover
+          thead
+            tr
+              th #
+              th 名称
+              th 地址
+              th 坐标
+              th 距离
+          tbody
