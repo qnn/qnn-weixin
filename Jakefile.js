@@ -1,7 +1,73 @@
-task('default', function(){
-  var jake = require('child_process').spawn('jake', ['-T']);
-  jake.stdout.on('data', function(data){
+var child_process = require('child_process');
+var STDOUT = {
+  write: function(data){
     process.stdout.write(data.toString());
+  }
+};
+
+task('default', function(){
+  var jake = child_process.spawn('jake', ['-T']);
+  jake.stdout.on('data', STDOUT.write);
+});
+
+var FOREVER = function(script){
+  child_process.exec('which forever', function(error, stdout, stderr){
+    if (!error && stdout) {
+      script(stdout.trim());
+    } else {
+      console.log('Please install forever first: npm -g install forever');
+    }
+  });
+}
+
+var START = function(verb){
+  FOREVER(function(forever_path){
+    var forever = child_process.spawn(forever_path, [
+      verb,
+      '-m', 5,
+      '--append',
+      '--minUptime', 2000,
+      '--spinSleepTime', 1000,
+      '-l', __dirname + '/log/forever.log',
+      '-o', __dirname + '/log/forever.stdout.log',
+      '-e', __dirname + '/log/forever.stderr.log',
+      '--pidFile', __dirname + '/tmp/pids/forever.pid',
+      'app.js'
+    ]);
+    forever.stdout.on('data', STDOUT.write);
+    forever.stderr.on('data', STDOUT.write);
+  });
+};
+
+desc('forever start');
+task('start', function(){
+  START('start');
+});
+
+desc('forever restart');
+task('restart', function(){
+  START('restart');
+});
+
+desc('forever stop');
+task('stop', function(){
+  FOREVER(function(forever_path){
+    var forever = child_process.spawn(forever_path, [
+      'stop',
+      '--pidFile', __dirname + '/tmp/pids/forever.pid',
+      'app.js'
+    ]);
+    forever.stdout.on('data', STDOUT.write);
+    forever.stderr.on('data', STDOUT.write);
+  });
+});
+
+desc('forever list');
+task('list', function(){
+  FOREVER(function(forever_path){
+    var forever = child_process.spawn(forever_path, ['list']);
+    forever.stdout.on('data', STDOUT.write);
+    forever.stderr.on('data', STDOUT.write);
   });
 });
 
