@@ -31,6 +31,11 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+// production only
+if ('production' == app.get('env')) {
+  app.set('port', 'tmp/sockets/node.socket');
+}
+
 app.get('/', index.index);
 app.get('/stores', stores.list_all);
 app.get('/weixin/bridge', weixin.bridge)
