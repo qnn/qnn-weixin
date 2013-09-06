@@ -48,6 +48,11 @@ app.get('/weixin/bridge', weixin.bridge)
 
 app.get('/api/stores', api.stores);
 
+// if nothing matches, return 404
+app.use(function(req, res){
+  res.status(404).render('404');
+});
+
 http.createServer(app).listen(app.get('port'), function(){
   if (fs.existsSync(SOCKET_FILE)) fs.chmodSync(SOCKET_FILE, 666); // some system need this to work right;
   console.log('Express server listening on port ' + app.get('port'));
