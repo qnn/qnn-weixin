@@ -13,6 +13,7 @@ task('default', function(){
 var FOREVER = function(script){
   child_process.exec('which forever', function(error, stdout, stderr){
     if (!error && stdout) {
+      process.env['NODE_ENV'] = 'production'; // production mode
       script(stdout.trim());
     } else {
       console.log('Please install forever first: npm -g install forever');
