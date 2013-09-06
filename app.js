@@ -32,9 +32,10 @@ if ('development' == app.get('env')) {
 }
 
 var SOCKET_FILE = __dirname + '/tmp/sockets/node.socket';
-fs.exists(SOCKET_FILE, function(exists){
-  if (exists) fs.unlinkSync(SOCKET_FILE);
-});
+
+if (fs.existsSync(SOCKET_FILE)) {
+  fs.unlinkSync(SOCKET_FILE);
+}
 
 // production only
 if ('production' == app.get('env')) {
@@ -48,6 +49,6 @@ app.get('/weixin/bridge', weixin.bridge)
 app.get('/api/stores', api.stores);
 
 http.createServer(app).listen(app.get('port'), function(){
-  fs.chmodSync(SOCKET_FILE, 666); // some system need this to work right;
+  if (fs.existsSync(SOCKET_FILE)) fs.chmodSync(SOCKET_FILE, 666); // some system need this to work right;
   console.log('Express server listening on port ' + app.get('port'));
 });
