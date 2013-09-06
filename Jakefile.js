@@ -20,6 +20,8 @@ var FOREVER = function(script){
   });
 }
 
+var PID_FILE = __dirname + '/tmp/pids/forever.pid';
+
 var START = function(verb){
   FOREVER(function(forever_path){
     var forever = child_process.spawn(forever_path, [
@@ -31,7 +33,7 @@ var START = function(verb){
       '-l', __dirname + '/log/forever.log',
       '-o', __dirname + '/log/forever.stdout.log',
       '-e', __dirname + '/log/forever.stderr.log',
-      '--pidFile', __dirname + '/tmp/pids/forever.pid',
+      '--pidFile', PID_FILE,
       'app.js'
     ]);
     forever.stdout.on('data', STDOUT.write);
@@ -41,12 +43,26 @@ var START = function(verb){
 
 desc('forever start');
 task('start', function(){
-  START('start');
+  require('fs').exists(PID_FILE, function(exists){
+    if (exists) {
+      console.log('Please use "jake stop" to stop current script first.');
+      console.log('If problem still exists, manually remove the PID file:');
+      console.log('> rm -f ' + PID_FILE);
+    } else {
+      START('start');
+    }
+  });
 });
 
 desc('forever restart');
 task('restart', function(){
-  START('restart');
+  require('fs').exists(PID_FILE, function(exists){
+    if (exists) {
+      START('restart');
+    } else {
+      START('start');
+    }
+  });
 });
 
 desc('forever stop');
@@ -54,7 +70,7 @@ task('stop', function(){
   FOREVER(function(forever_path){
     var forever = child_process.spawn(forever_path, [
       'stop',
-      '--pidFile', __dirname + '/tmp/pids/forever.pid',
+      '--pidFile', PID_FILE,
       'app.js'
     ]);
     forever.stdout.on('data', STDOUT.write);
