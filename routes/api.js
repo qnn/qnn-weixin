@@ -28,7 +28,7 @@ exports.stores = function(req, res){  // sort by distance
     }
   }
 
-  if (count <= stores_list.length && count > 0) {
+  if (count > 0) {
     count = parseInt(count);
   } else {
     count = 10;
@@ -40,5 +40,8 @@ exports.stores = function(req, res){  // sort by distance
     start = 0;
   }
 
-  res.json({ stores: stores_list.slice(start, start + count) });
+  var end = start + count;
+  if (end > stores_list.length) end = stores_list.length;
+
+  res.json({ stores: stores_list.slice(start, end) });
 };

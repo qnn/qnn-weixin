@@ -1,16 +1,20 @@
+block variables
+  title = "所有网点"
+  page = "stores"
+
 extends layout
 
 block content
-  - var sizes = [20, 5, 60, 18, 8, 15]
-  - each cities, province in stores_list
-    - each stores, city in cities
-      p #{province}::#{city}
-      - each store in stores
-        p
-        - each value, index in store
-          - if(typeof value === 'boolean')
-            select
-              option yes
-              option no
-          - else
-            input(value=value, size=sizes[index])
+  article.container(role='main')
+    .col-md-offset-1.col-md-10
+      .panel.panel-default
+        .panel-heading 全能销售网点
+        table#stores_list_all.table.table-hover.table-striped
+          thead
+            tr
+              th #
+              th 名称/地址
+              th 坐标
+          tbody
+            tr
+              td(colspan=3) 等待载入...

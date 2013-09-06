@@ -1,12 +1,15 @@
+block variables
+
 doctype 5
 html
   head
-    title= title
+    title= title + " - 销售网点管理工具"
     link(rel='stylesheet', href='/vendor/stylesheets/bootstrap.min.css')
     link(rel='stylesheet', href='/vendor/stylesheets/bootstrap.theme.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src='/vendor/javascripts/zepto.min.js')
     script(src='javascripts/index.js')
+    script(src='javascripts/stores.js')
   body
     nav.navbar.navbar-default(role='navigation')
       .container
@@ -14,6 +17,6 @@ html
             a.navbar-brand(href='/') 销售网点管理工具
           .collapse.navbar-collapse.navbar-ex1-collapse
             ul.nav.navbar-nav
-              li
+              li(class=page=='stores'?'active':'')
                 a(href='/stores') 所有网点
     block content

@@ -40,7 +40,7 @@ $(function(){
       $.each(data.stores, function(a, b){
         $('#stores_list tbody').append('<tr><td>' + (a + 1) + '</td><td>' +
           b[0] + '<br><small>' + b[4] + '</small></td><td>' + b[11].toFixed(3) + ' km' +
-          '<br><small>' + b[9].toFixed(6) + ', ' + b[10].toFixed(6) + '</small></td></tr>')
+          '<br><small>' + b[9].toFixed(6) + ', ' + b[10].toFixed(6) + '</small></td></tr>');
       });
       $('#results').removeClass('hidden');
     });
