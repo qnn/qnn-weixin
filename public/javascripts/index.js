@@ -31,7 +31,7 @@ $(function(){
   });
   var list_nearby_stores_text = $('#list_nearby_stores').text();
   $('#list_nearby_stores').on('click', function(){
-    $('#list_nearby_stores').text('正在列出销售网点...').prop('disabled', true);
+    $('#list_nearby_stores').text('正在列出...').prop('disabled', true);
     var resume_button = function() { $('#list_nearby_stores').text(list_nearby_stores_text).prop('disabled', false); }
     var lat = $('#coord-lat').val(), lng = $('#coord-lng').val();
     $.getJSON('/api/stores', { lat: lat, lng: lng }, function(data){
@@ -39,10 +39,22 @@ $(function(){
       $('#stores_list tbody').empty();
       $.each(data.stores, function(a, b){
         $('#stores_list tbody').append('<tr><td>' + (a + 1) + '</td><td>' +
-          b[0] + '</td><td>' + b[4] + '</td><td>' + b[9].toFixed(6) + ', ' +
-          b[10].toFixed(6) + '</td><td>' + b[11].toFixed(3) + '</td></tr>')
+          b[0] + '<br><small>' + b[4] + '</small></td><td>' + b[11].toFixed(3) + ' km' +
+          '<br><small>' + b[9].toFixed(6) + ', ' + b[10].toFixed(6) + '</small></td></tr>')
       });
       $('#results').removeClass('hidden');
     });
   });
+  var validate_coordinates = function() {
+    if (/^\-?([0-9]|[1-8][0-9]|90)\.[0-9]{1,6}$/.test($('#coord-lat').val()) &&
+        /^\-?([0-9]{1,2}|1[0-7][0-9]|180)\.[0-9]{1,6}$/.test($('#coord-lng').val())) {
+      $('#list_nearby_stores').prop('disabled', false);
+    } else {
+      $('#list_nearby_stores').prop('disabled', true);
+    }
+  };
+  $('#coord-lat, #coord-lng').on('keyup', function(){
+    validate_coordinates();
+  });
+  validate_coordinates();
 });
