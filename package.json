@@ -1,8 +1,8 @@
 {
-  "name": "QNN-Stores",
+  "name": "QNN-Weixin",
   "version": "0.0.1",
   "private": true,
-  "description": "A management tool for QNN stores. This tool also provides API to find the nearest stores.",
+  "description": "A Weixin (WeChat) management tool for QNN.",
   "author": "caiguanhao <caiguanhao@gmail.com>",
   "license": "The BSD 3-Clause License",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/qnn/qnn-stores.git"
+    "url": "https://github.com/qnn/qnn-weixin.git"
   },
   "dependencies": {
     "express": "3.3.8",
