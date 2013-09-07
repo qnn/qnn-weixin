@@ -10,6 +10,10 @@ task('default', function(){
   jake.stdout.on('data', STDOUT.write);
 });
 
+/*
+ * Forever
+ */
+
 var FOREVER = function(script){
   child_process.exec('which forever', function(error, stdout, stderr){
     if (!error && stdout) {
@@ -88,7 +92,37 @@ task('list', function(){
   });
 });
 
-desc('Find coordinates.');
+/*
+ * Token
+ */
+
+desc('create or update token file');
+task('token', function(){
+  var rl = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+  rl.question('Enter your Weixin token: ', function(token){
+    if (token.length < 3 || token.length > 32) {
+      console.log('What you type does not look like a token. Aborted.');
+      rl.close();
+      return;
+    }
+    require('fs').writeFile('./weixin.token.json', JSON.stringify({
+      token: token
+    }, null, 2) + '\n', function(error){
+      console.log( (error ? 'Error saving token to file' :
+                            'Token was saved to file') + ': weixin.token.json.');
+      rl.close();
+    });
+  });
+});
+
+/*
+ * Coordinates
+ */
+
+desc('find coordinates');
 task('coord', function(){
   var stores_list = require('./stores.json');
   var coord = require('./lib/coord.js');
