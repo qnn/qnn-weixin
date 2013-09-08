@@ -1,4 +1,4 @@
-exports.bridge = function(req, res){
+exports.get = function(req, res){
   var weixin = require('../lib/weixin');
   var verified = weixin.verify_signature(req.query);
   if (verified) {
@@ -7,4 +7,9 @@ exports.bridge = function(req, res){
     res.writeHead(302, { 'Location': '/' });
     res.end();
   }
+};
+
+exports.post = function(req, res){
+  console.log(req.query, req.body);
+  res.end();
 };

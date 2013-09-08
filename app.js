@@ -44,7 +44,9 @@ if ('production' == app.get('env')) {
 
 app.get('/', index.index);
 app.get('/stores', stores.list_all);
-app.get('/weixin/bridge', weixin.bridge)
+
+app.get('/weixin', weixin.get);
+app.post('/weixin', weixin.post);
 
 app.get('/api/stores', api.stores);
 
