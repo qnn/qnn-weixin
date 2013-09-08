@@ -1,17 +1,21 @@
 var weixin = require('../lib/weixin');
 
-exports.get = function(req, res){
+var verify = function(req, res){
   var verified = weixin.verify_signature(req.query);
-  if (verified) {
-    res.send(req.query.echostr);
-  } else {
-    res.writeHead(401).end();
+  if (!verified) {
+    res.writeHead(401);
+    res.end();
   }
+}
+
+exports.get = function(req, res){
+  verify(req, res);
+
+  res.send(req.query.echostr);
 };
 
 exports.post = function(req, res){
-  var verified = weixin.verify_signature(req.query);
-  if (!verified) res.writeHead(401).end();
+  verify(req, res);
 
   // weixin's post data is just xml...
   var raw_post_data = '';
