@@ -11,3 +11,12 @@ subscribe: |
   <Event><![CDATA[subscribe]]></Event>
   <EventKey><![CDATA[8342811380953159271]]></EventKey>
   </xml>
+
+unsubscribe: |
+  <xml><ToUserName><![CDATA[%s]]></ToUserName>
+  <FromUserName><![CDATA[%s]]></FromUserName>
+  <CreateTime>1378622389</CreateTime>
+  <MsgType><![CDATA[event]]></MsgType>
+  <Event><![CDATA[unsubscribe]]></Event>
+  <EventKey><![CDATA[8342811380953159271]]></EventKey>
+  </xml>

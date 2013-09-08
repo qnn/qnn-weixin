@@ -32,6 +32,8 @@ exports.post = function(req, res){
             res.writeHead(200, { 'Content-Type': 'text/xml; charset=utf-8' });
           }
           res.write(response);
+        } else {
+          res.writeHead(204);
         }
       }
       res.end();
