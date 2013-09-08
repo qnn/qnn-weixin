@@ -1,5 +1,6 @@
+var weixin = require('../lib/weixin');
+
 exports.get = function(req, res){
-  var weixin = require('../lib/weixin');
   var verified = weixin.verify_signature(req.query);
   if (verified) {
     res.send(req.query.echostr);
