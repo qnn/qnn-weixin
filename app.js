@@ -59,3 +59,5 @@ http.createServer(app).listen(app.get('port'), function(){
   if (fs.existsSync(SOCKET_FILE)) fs.chmodSync(SOCKET_FILE, 666); // some system need this to work right;
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+module.exports = app;

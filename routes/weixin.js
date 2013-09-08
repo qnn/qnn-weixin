@@ -5,17 +5,19 @@ var verify = function(req, res){
   if (!verified) {
     res.writeHead(401);
     res.end();
+    return false;
   }
+  return true;
 }
 
 exports.get = function(req, res){
-  verify(req, res);
+  if (!verify(req, res)) return;
 
   res.send(req.query.echostr);
 };
 
 exports.post = function(req, res){
-  verify(req, res);
+  if (!verify(req, res)) return;
 
   // weixin's post data is just xml...
   var raw_post_data = '';

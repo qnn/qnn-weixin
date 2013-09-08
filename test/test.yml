@@ -1,0 +1,13 @@
+post_query:
+  signature: 'eb0b94697853fadda0d4689733de476cd76c2d52'
+  timestamp: 1378623863
+  nonce: 1378561806
+
+subscribe: |
+  <xml><ToUserName><![CDATA[%s]]></ToUserName>
+  <FromUserName><![CDATA[%s]]></FromUserName>
+  <CreateTime>1378622389</CreateTime>
+  <MsgType><![CDATA[event]]></MsgType>
+  <Event><![CDATA[subscribe]]></Event>
+  <EventKey><![CDATA[8342811380953159271]]></EventKey>
+  </xml>
