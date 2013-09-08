@@ -26,7 +26,7 @@ exports.post = function(req, res){
       if (!err) {
         var response = weixin.process(result);
         if (response) {
-          if (response.substr(0,5) == '<xml>') {
+          if (response.substr(0, 5) == '<xml>') {
             res.writeHead(200, { 'Content-Type': 'text/xml; charset=utf-8' });
           }
           res.write(response);
