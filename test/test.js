@@ -1,3 +1,5 @@
+process.env['NODE_ENV'] = 'test';
+
 var app = require('../app');
 var request = require('supertest');
 var libweixin = require('../lib/weixin');
