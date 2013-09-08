@@ -6,7 +6,8 @@
   "author": "caiguanhao <caiguanhao@gmail.com>",
   "license": "The BSD 3-Clause License",
   "scripts": {
-    "start": "node app.js"
+    "start": "node_modules/.bin/nodemon app.js",
+    "test": "node_modules/.bin/mocha"
   },
   "repository": {
     "type": "git",
@@ -18,5 +19,10 @@
     "js-yaml": "2.1.0",
     "jade": "*",
     "stylus": "*"
+  },
+  "devDependencies": {
+    "supertest": "*",
+    "mocha": "*",
+    "nodemon": "*"
   }
 }
