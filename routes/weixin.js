@@ -4,12 +4,19 @@ exports.get = function(req, res){
   if (verified) {
     res.send(req.query.echostr);
   } else {
-    res.writeHead(302, { 'Location': '/' });
-    res.end();
+    res.writeHead(401).end();
   }
 };
 
 exports.post = function(req, res){
-  console.log(req.query, req.body);
-  res.end();
+  var verified = weixin.verify_signature(req.query);
+  if (!verified) res.writeHead(401).end();
+
+  // weixin's post data is just xml...
+  var raw_post_data = '';
+  req.on('data', function(data){ raw_post_data += data; });
+  req.on('end', function(){
+    console.log(raw_post_data);
+    res.end();
+  });
 };
