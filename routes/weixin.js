@@ -21,7 +21,18 @@ exports.post = function(req, res){
   var raw_post_data = '';
   req.on('data', function(data){ raw_post_data += data; });
   req.on('end', function(){
-    console.log(raw_post_data);
-    res.end();
+    var parseString = require('xml2js').parseString;
+    parseString(raw_post_data, function (err, result) {
+      if (!err) {
+        var response = weixin.process(result);
+        if (response) {
+          if (response.substr(0,5) == '<xml>') {
+            res.writeHead(200, { 'Content-Type': 'text/xml; charset=utf-8' });
+          }
+          res.write(response);
+        }
+      }
+      res.end();
+    });
   });
 };
