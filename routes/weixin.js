@@ -1,4 +1,5 @@
-var weixin = require('../lib/weixin');
+var paths = require('../paths');
+var weixin = require(paths.lib.weixin);
 
 var verify = function(req, res){
   var verified = weixin.verify_signature(req.query);

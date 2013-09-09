@@ -1,17 +1,17 @@
 process.env['NODE_ENV'] = 'test';
 
+require('js-yaml');
+var paths = require('../paths');
+
 var app = require('../app');
 var request = require('supertest');
-var libweixin = require('../lib/weixin');
+var weixin = require(paths.lib.weixin);
 
 var format = require('util').format;
 var assert = require('assert');
 var parseString = require('xml2js').parseString;
 
-require('js-yaml');
-var paths = require('../paths');
 var test = require('./test.yml');
-var weixin = require('../lib/weixin.yml');
 var config = require(paths.config);
 
 var to = 'gh_f7527586bc92', from = 'NZf2QSoejkO52d6Ikj_s0wwojS7j';
@@ -26,7 +26,7 @@ describe('subscription functionality', function(){
       make_request()
         .send(format(test.subscribe, to, from))
         .expect(200)
-        .expect(libweixin.respond_with_text({
+        .expect(weixin.respond_with_text({
           FromUserName: from,
           ToUserName: to
         }, config.newly_subscribed))
@@ -53,7 +53,7 @@ describe('subscription functionality', function(){
 describe('find nearby stores with position/coordinates functionality', function(){
   var x = config.test.coord.lat, y = config.test.coord.lng;
 
-  var store = require('../lib/store');
+  var store = require(paths.lib.store);
   // remove stores.json from module caches as its content was manipulated. it will be 're-required'.
   delete require.cache[require.resolve('../stores.json')];
   var stores_list = store.flatten(require('../stores.json'));
@@ -86,7 +86,7 @@ describe('find nearby stores with position/coordinates functionality', function(
       make_request()
         .send(format(test.find_nearby_stores, to, from, x, y))
         .expect(200)
-        .expect(libweixin.respond_with_list({
+        .expect(weixin.respond_with_list({
           FromUserName: from,
           ToUserName: to
         }, list))
@@ -102,7 +102,7 @@ describe('find nearby stores with position/coordinates functionality', function(
       make_request()
         .send(format(test.text, to, from, x + ', ' + y))
         .expect(200)
-        .expect(libweixin.respond_with_list({
+        .expect(weixin.respond_with_list({
           FromUserName: from,
           ToUserName: to
         }, list))
