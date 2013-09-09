@@ -51,7 +51,7 @@ describe('subscription functionality', function(){
 });
 
 describe('find nearby stores with position/coordinates functionality', function(){
-  var x = 22.849068, y = 113.216673;
+  var x = config.test.coord.lat, y = config.test.coord.lng;
 
   var store = require('../lib/store');
   // remove stores.json from module caches as its content was manipulated. it will be 're-required'.
@@ -76,7 +76,7 @@ describe('find nearby stores with position/coordinates functionality', function(
       assert.strictEqual(result.xml.Articles[0].item.length, count, 'wrong number of stores?');
       assert((result.xml.Articles[0].item[0].Title instanceof Array), 'article item title is not an array?');
       assert.strictEqual(result.xml.Articles[0].item[0].Title.join(''), config.title_of_first_nearby_store, 'wrong calculation?');
-      assert.strictEqual(result.xml.Articles[0].item[1].Title.join('').split('\n')[0], '佛山大良专卖店', 'wrong calculation?');
+      assert.strictEqual(result.xml.Articles[0].item[1].Title.join('').split('\n')[0], config.test.nearby_store_name, 'wrong calculation?');
       done();
     });
   }

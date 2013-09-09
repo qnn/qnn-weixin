@@ -4,6 +4,10 @@ var app = require('../app');
 var request = require('supertest');
 var assert = require('assert');
 
+require('js-yaml');
+var paths = require('../paths');
+var config = require(paths.config);
+
 describe('given nothing', function(){
   it('should return all stores', function(done){
     request(app)
@@ -26,8 +30,8 @@ describe('given latitude and longitutde', function(){
     request(app)
       .get('/api/stores')
       .query({
-        lat: 22.849068,
-        lng: 113.216673,
+        lat: config.test.coord.lat,
+        lng: config.test.coord.lng,
         start: 0,
         count: count
       })
@@ -38,7 +42,7 @@ describe('given latitude and longitutde', function(){
         assert(body.hasOwnProperty('stores'), 'not stores?');
         assert((body.stores instanceof Array), 'no stores?');
         assert.strictEqual(body.stores.length, count, 'wrong number of stores?');
-        assert.strictEqual(body.stores[0][0], '佛山大良专卖店', 'wrong calculation?');
+        assert.strictEqual(body.stores[0][0], config.test.nearby_store_name, 'wrong calculation?');
         done();
       });
   });
