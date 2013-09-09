@@ -9,6 +9,18 @@ exports.stores = function(req, res){  // sort by distance
   var stores_list = store.flatten(require('../stores.json'));
   var coord = require('../lib/coord');
 
+  if (count > 0) {
+    count = parseInt(count);
+  } else {
+    count = 10;
+  }
+
+  if (start >= 0 && start < stores_list.length) {
+    start = parseInt(start);
+  } else {
+    start = 0;
+  }
+
   if (/^\-?([0-9]|[1-8][0-9]|90)\.[0-9]{1,6}$/.test(latitude)) {
     if (/^\-?([0-9]{1,2}|1[0-7][0-9]|180)\.[0-9]{1,6}$/.test(longitude)) {
       latitude = parseFloat(latitude);
@@ -28,20 +40,10 @@ exports.stores = function(req, res){  // sort by distance
     }
   }
 
-  if (count > 0) {
-    count = parseInt(count);
-  } else {
-    count = 10;
-  }
-
-  if (start >= 0 && start < stores_list.length) {
-    start = parseInt(start);
-  } else {
-    start = 0;
-  }
-
   var end = start + count;
   if (end > stores_list.length) end = stores_list.length;
 
-  res.json({ stores: stores_list.slice(start, end) });
+  stores_list = stores_list.slice(start, end);
+
+  res.json({ stores: stores_list });
 };
