@@ -21,6 +21,16 @@ unsubscribe: |
   <EventKey><![CDATA[8342811380953159271]]></EventKey>
   </xml>
 
+text: |
+  <xml>
+  <ToUserName><![CDATA[%s]]></ToUserName>
+  <FromUserName><![CDATA[%s]]></FromUserName> 
+  <CreateTime>1378622389</CreateTime>
+  <MsgType><![CDATA[text]]></MsgType>
+  <Content><![CDATA[%s]]></Content>
+  <MsgId>5921498370509140808</MsgId>
+  </xml>
+
 find_nearby_stores: |
   <xml><ToUserName><![CDATA[%s]]></ToUserName>
   <FromUserName><![CDATA[%s]]></FromUserName>
