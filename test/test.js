@@ -60,6 +60,8 @@ describe('find nearby stores with position/coordinates functionality', function(
   var list = store.find_nearby_stores_to_weixin_list(stores_list, x, y);
 
   var validate_content = function(content, done) {
+    var count = config.number_of_nearby_stores_to_list;
+    count++; // this is the first banner item;
     parseString(content, function (err, result) {
       if (err) throw err;
       assert(result.hasOwnProperty('xml'), 'not xml?');
@@ -71,7 +73,7 @@ describe('find nearby stores with position/coordinates functionality', function(
       assert(result.xml.Articles[0].item[0].hasOwnProperty('Description'), 'article item not containing description?');
       assert(result.xml.Articles[0].item[0].hasOwnProperty('PicUrl'), 'article item not containing pic_url?');
       assert(result.xml.Articles[0].item[0].hasOwnProperty('Url'), 'article item not containing url?');
-      assert.strictEqual(result.xml.Articles[0].item.length, 6, 'wrong number of stores?');
+      assert.strictEqual(result.xml.Articles[0].item.length, count, 'wrong number of stores?');
       assert((result.xml.Articles[0].item[0].Title instanceof Array), 'article item title is not an array?');
       assert.strictEqual(result.xml.Articles[0].item[0].Title.join(''), config.title_of_first_nearby_store, 'wrong calculation?');
       assert.strictEqual(result.xml.Articles[0].item[1].Title.join('').split('\n')[0], '佛山大良专卖店', 'wrong calculation?');
