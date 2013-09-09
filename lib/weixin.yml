@@ -6,3 +6,23 @@ text_response_template: |
   <MsgType><![CDATA[text]]></MsgType>
   <Content><![CDATA[%s]]></Content>
   </xml>
+
+list_response_template: |
+  <xml>
+  <ToUserName><![CDATA[%s]]></ToUserName>
+  <FromUserName><![CDATA[%s]]></FromUserName>
+  <CreateTime>%s</CreateTime>
+  <MsgType><![CDATA[news]]></MsgType>
+  <ArticleCount>%s</ArticleCount>
+  <Articles>
+  %s
+  </Articles>
+  </xml>
+
+list_item_template: |
+  <item>
+  <Title><![CDATA[%s]]></Title> 
+  <Description><![CDATA[%s]]></Description>
+  <PicUrl><![CDATA[%s]]></PicUrl>
+  <Url><![CDATA[%s]]></Url>
+  </item>

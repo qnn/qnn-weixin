@@ -20,3 +20,15 @@ unsubscribe: |
   <Event><![CDATA[unsubscribe]]></Event>
   <EventKey><![CDATA[8342811380953159271]]></EventKey>
   </xml>
+
+find_nearby_stores: |
+  <xml><ToUserName><![CDATA[%s]]></ToUserName>
+  <FromUserName><![CDATA[%s]]></FromUserName>
+  <CreateTime>1378622389</CreateTime>
+  <MsgType><![CDATA[location]]></MsgType>
+  <Location_X>23.134521</Location_X>
+  <Location_Y>113.358803</Location_Y>
+  <Scale>20</Scale>
+  <Label><![CDATA[位置信息]]></Label>
+  <MsgId>5921404463694952559</MsgId>
+  </xml>
