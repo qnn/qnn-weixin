@@ -5,6 +5,7 @@ exports.stores = function(req, res){  // sort by distance
   var start = req.query.start;
 
   var store = require('../lib/store');
+  // remove stores.json from module caches as its content was manipulated. it will be 're-required'.
   delete require.cache[require.resolve('../stores.json')];
   var stores_list = store.flatten(require('../stores.json'));
 
