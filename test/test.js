@@ -9,9 +9,10 @@ var assert = require('assert');
 var parseString = require('xml2js').parseString;
 
 require('js-yaml');
+var paths = require('../paths');
 var test = require('./test.yml');
 var weixin = require('../lib/weixin.yml');
-var config = require('../weixin.config.yml');
+var config = require(paths.config);
 
 var to = 'gh_f7527586bc92', from = 'NZf2QSoejkO52d6Ikj_s0wwojS7j';
 

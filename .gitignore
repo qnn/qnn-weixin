@@ -15,4 +15,4 @@ node_modules
 
 public/stylesheets/*.css
 
-weixin.token.json
+token.json

@@ -108,11 +108,12 @@ task('token', function(){
       rl.close();
       return;
     }
-    require('fs').writeFile('./weixin.token.json', JSON.stringify({
+    var paths = require('./paths');
+    require('fs').writeFile(paths.weixin.token, JSON.stringify({
       token: token
     }, null, 2) + '\n', function(error){
       console.log( (error ? 'Error saving token to file' :
-                            'Token was saved to file') + ': weixin.token.json.');
+                            'Token was saved to file') + ': ' + paths.weixin.token + '.');
       rl.close();
     });
   });
