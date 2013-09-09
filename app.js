@@ -1,13 +1,4 @@
-
-/**
- * Module dependencies.
- */
-
 var express = require('express');
-var index = require('./routes');
-var stores = require('./routes/stores');
-var weixin = require('./routes/weixin');
-var api = require('./routes/api');
 var http = require('http');
 var path = require('path');
 var fs = require('fs');
@@ -42,12 +33,18 @@ if ('production' == app.get('env')) {
   app.set('port', SOCKET_FILE);
 }
 
-app.get('/', index.index);
-app.get('/stores', stores.list_all);
+// web:
+var web = require('./routes/web');
+app.get('/', web.index);
+app.get('/stores', web.stores);
 
+// weixin:
+var weixin = require('./routes/weixin');
 app.get('/weixin', weixin.get);
 app.post('/weixin', weixin.post);
 
+// api:
+var api = require('./routes/api');
 app.get('/api/stores', api.stores);
 
 // if nothing matches, return 404
