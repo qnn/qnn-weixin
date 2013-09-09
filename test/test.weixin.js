@@ -11,20 +11,20 @@ var format = require('util').format;
 var assert = require('assert');
 var parseString = require('xml2js').parseString;
 
-var test = require('./test.yml');
+var weixin_data = require(paths.test.weixin_data);
 var config = require(paths.config);
 
 var to = 'gh_f7527586bc92', from = 'NZf2QSoejkO52d6Ikj_s0wwojS7j';
 
 var make_request = function() {
-  return request(app).post('/weixin').set('Content-Type', 'text/xml').query(test.post_query);
+  return request(app).post('/weixin').set('Content-Type', 'text/xml').query(weixin_data.post_query);
 };
 
 describe('subscription functionality', function(){
   describe('when user subscribe weixin account', function(){
     it('should return a welcome message (aka "newly_subscribed")', function(done){
       make_request()
-        .send(format(test.subscribe, to, from))
+        .send(format(weixin_data.subscribe, to, from))
         .expect(200)
         .expect(weixin.respond_with_text({
           FromUserName: from,
@@ -40,7 +40,7 @@ describe('subscription functionality', function(){
   describe('when user unsubscribe weixin account', function(){
     it('should return 204', function(done){
       make_request()
-        .send(format(test.unsubscribe, to, from))
+        .send(format(weixin_data.unsubscribe, to, from))
         .expect(204)
         .end(function(err, res){
           if (err) throw err;
@@ -84,7 +84,7 @@ describe('find nearby stores with position/coordinates functionality', function(
   describe('when user sends his/her coordinates', function(){
     it('should return a list of nearby stores', function(done){
       make_request()
-        .send(format(test.find_nearby_stores, to, from, x, y))
+        .send(format(weixin_data.find_nearby_stores, to, from, x, y))
         .expect(200)
         .expect(weixin.respond_with_list({
           FromUserName: from,
@@ -100,7 +100,7 @@ describe('find nearby stores with position/coordinates functionality', function(
   describe('when user send coordinates text', function(){
     it('should return a list of stores near that point', function(done){
       make_request()
-        .send(format(test.text, to, from, x + ', ' + y))
+        .send(format(weixin_data.text, to, from, x + ', ' + y))
         .expect(200)
         .expect(weixin.respond_with_list({
           FromUserName: from,

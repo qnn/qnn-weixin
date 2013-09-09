@@ -14,3 +14,7 @@ exports.lib = {
 };
 
 exports.config = __dirname + '/config.yml';
+
+exports.test = {
+  weixin_data: __dirname + '/test/test.weixin.data.yml'
+}
