@@ -70,9 +70,10 @@ describe('find nearby stores with position/coordinates functionality', function(
       assert(result.xml.Articles[0].item[0].hasOwnProperty('Description'), 'article item not containing description?');
       assert(result.xml.Articles[0].item[0].hasOwnProperty('PicUrl'), 'article item not containing pic_url?');
       assert(result.xml.Articles[0].item[0].hasOwnProperty('Url'), 'article item not containing url?');
-      assert.strictEqual(result.xml.Articles[0].item.length, 5, 'wrong number of stores?');
+      assert.strictEqual(result.xml.Articles[0].item.length, 6, 'wrong number of stores?');
       assert((result.xml.Articles[0].item[0].Title instanceof Array), 'article item title is not an array?');
-      assert.strictEqual(result.xml.Articles[0].item[0].Title.join(''), '佛山大良专卖店', 'wrong calculation?');
+      assert.strictEqual(result.xml.Articles[0].item[0].Title.join(''), '打开地图查看各销售网点位置', 'wrong calculation?');
+      assert.strictEqual(result.xml.Articles[0].item[1].Title.join('').split('\n')[0], '佛山大良专卖店', 'wrong calculation?');
       done();
     });
   }
