@@ -16,14 +16,46 @@ var config = require(paths.config);
 
 var to = 'gh_f7527586bc92', from = 'NZf2QSoejkO52d6Ikj_s0wwojS7j';
 
-var make_request = function() {
+describe('authentication functionality', function(){
+  describe('for get requests', function(){
+    it('should return 200', function(done){
+      var echostr = '5922283080490844799';
+      var query = JSON.parse(JSON.stringify(weixin_data.post_query)); // clone object
+      query['echostr'] = echostr;
+      request(app)
+        .get('/weixin')
+        .query(query)
+        .expect(200)
+        .expect(echostr)
+        .end(function(err, res){
+          if (err) throw err;
+          done();
+        });
+    });
+  });
+
+  describe('for post requests', function(){
+    it('should return 204', function(done){
+      request(app)
+        .post('/weixin')
+        .query(weixin_data.post_query)
+        .expect(204)
+        .end(function(err, res){
+          if (err) throw err;
+          done();make_xml_post_request
+        });
+    });
+  });
+});
+
+var make_xml_post_request = function() {
   return request(app).post('/weixin').set('Content-Type', 'text/xml').query(weixin_data.post_query);
 };
 
 describe('subscription functionality', function(){
   describe('when user subscribe weixin account', function(){
     it('should return a welcome message (aka "newly_subscribed")', function(done){
-      make_request()
+      make_xml_post_request()
         .send(format(weixin_data.subscribe, to, from))
         .expect(200)
         .expect(weixin.respond_with_text({
@@ -39,7 +71,7 @@ describe('subscription functionality', function(){
 
   describe('when user unsubscribe weixin account', function(){
     it('should return 204', function(done){
-      make_request()
+      make_xml_post_request()
         .send(format(weixin_data.unsubscribe, to, from))
         .expect(204)
         .end(function(err, res){
@@ -83,7 +115,7 @@ describe('find nearby stores with position/coordinates functionality', function(
 
   describe('when user sends his/her coordinates', function(){
     it('should return a list of nearby stores', function(done){
-      make_request()
+      make_xml_post_request()
         .send(format(weixin_data.find_nearby_stores, to, from, x, y))
         .expect(200)
         .expect(weixin.respond_with_list({
@@ -99,7 +131,7 @@ describe('find nearby stores with position/coordinates functionality', function(
 
   describe('when user send coordinates text', function(){
     it('should return a list of stores near that point', function(done){
-      make_request()
+      make_xml_post_request()
         .send(format(weixin_data.text, to, from, x + ', ' + y))
         .expect(200)
         .expect(weixin.respond_with_list({
