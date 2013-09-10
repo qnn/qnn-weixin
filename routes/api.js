@@ -3,6 +3,7 @@ exports.stores = function(req, res){  // sort by distance
   var longitude = req.query.lng;
   var count = req.query.count;
   var start = req.query.start;
+  var callback = req.query.callback;
 
   var paths = require('../paths');
   var store = require(paths.lib.store);
@@ -29,5 +30,13 @@ exports.stores = function(req, res){  // sort by distance
 
   stores_list = stores_list.slice(start, end);
 
-  res.json({ stores: stores_list });
+  var output = { stores: stores_list };
+
+  if (callback) {
+    res.writeHead(200, { 'Content-Type': 'text/javascript; charset=utf-8' });
+    res.write(callback + '(' + JSON.stringify(output, null, 0) + ');');
+    res.end();
+  } else {
+    res.json(output);
+  }
 };

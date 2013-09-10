@@ -37,6 +37,7 @@ if ('production' == app.get('env')) {
 var web = require('./routes/web');
 app.get('/', web.index);
 app.get('/stores', web.stores);
+app.get('/maps', web.maps);
 
 // weixin:
 var weixin = require('./routes/weixin');

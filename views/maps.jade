@@ -1,0 +1,61 @@
+doctype 5
+html
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport' content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
+    title Maps
+    script(src='http://api.map.baidu.com/api?v=2.0&ak=D4b3d7bef9a51f3d40431f4aee37e6bf')
+    style.
+      html{
+        background:#fff;
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        height: 100%;
+      }
+      #map{
+        width: 100%;
+        height: 100%;
+      }
+      a.details {
+        display: inline-block;
+        padding: 3px 5px;
+        background: #ff0000;
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+  body
+    #map
+    script.
+      var map = new BMap.Map("map");
+      map.enableScrollWheelZoom();
+      var myCity = new BMap.LocalCity();
+      myCity.get(function(result){
+        var cityName = result.name;
+        map.centerAndZoom(cityName, 11);
+      });
+      var storeInfo = function(name, address, tel){
+        return '<h2 style="margin: 0; padding: 0;">' + name + '</h2>' +
+          '<p>地址：' + address + '</p>' +
+          '<p>电话：' + tel + '</p>' +
+          '<p><a class="details" href="/store/' + encodeURI(name) + '">查看详细</a></p>';
+      };
+      var addMarker = function(point, content){
+        var marker = new BMap.Marker(point);
+        map.addOverlay(marker);
+        var infoWindow = new BMap.InfoWindow(content);
+        marker.addEventListener('click', function(){
+          this.openInfoWindow(infoWindow);
+        });
+      };
+      var stores2points = function(stores_obj){
+        var stores = stores_obj.stores;
+        for(var i = 0; i < stores.length; i++) {
+          var store = stores[i];
+          var point = new BMap.Point(store[10], store[9]);
+          addMarker(point, storeInfo(store[0], store[1] + (store[1] != store[2] ? store[2] : '') + store[3] + store[4], store[5]));
+        }
+      };
+    script(src='/api/stores?lat=#{lat}&lng=#{lng}&count=#{count}&callback=stores2points')
