@@ -1,3 +1,4 @@
+var paths = require('./paths');
 var child_process = require('child_process');
 var STDOUT = {
   write: function(data){
@@ -115,7 +116,6 @@ task('token', function(){
       rl.close();
       return;
     }
-    var paths = require('./paths');
     require('fs').writeFile(paths.weixin.token, JSON.stringify({
       token: token
     }, null, 2) + '\n', function(error){
@@ -132,8 +132,8 @@ task('token', function(){
 
 desc('find coordinates');
 task('coord', function(){
-  var stores_list = require('./stores.json');
-  var coord = require('./lib/coord.js');
+  var stores_list = require(paths.stores);
+  var coord = require(paths.lib.coord);
 
   function has_coordinates(store) {
     return /^\-?\d+\.\d+$/m.test(store.join('\n'));

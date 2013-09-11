@@ -87,8 +87,8 @@ describe('find nearby stores with position/coordinates functionality', function(
 
   var store = require(paths.lib.store);
   // remove stores.json from module caches as its content was manipulated. it will be 're-required'.
-  delete require.cache[require.resolve('../stores.json')];
-  var stores_list = store.flatten(require('../stores.json'));
+  delete require.cache[require.resolve(paths.stores)];
+  var stores_list = store.flatten(require(paths.stores));
   var list = store.find_nearby_stores_to_weixin_list(stores_list, x, y);
 
   var validate_content = function(content, done) {
