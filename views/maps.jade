@@ -40,7 +40,7 @@ html
         return '<h2 style="margin: 0; padding: 0;">' + name + '</h2>' +
           '<p>地址：' + address + '</p>' +
           '<p>电话：' + tel + '</p>' +
-          '<p><a class="details" href="/store/' + encodeURI(name) + '">查看详细</a></p>';
+          '<p><a class="details" href="/stores/' + encodeURI(name) + '">查看详细</a></p>';
       };
       var addMarker = function(point, content){
         var marker = new BMap.Marker(point);
