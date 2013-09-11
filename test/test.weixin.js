@@ -1,21 +1,23 @@
 process.env['NODE_ENV'] = 'test';
 
 require('js-yaml');
-var paths = require('../paths');
 
-var app = require('../app');
-var request = require('supertest');
-var weixin = require(paths.lib.weixin);
+var paths       = require('../paths');
 
-var format = require('util').format;
-var assert = require('assert');
+var app         = require('../app');
+var request     = require('supertest');
+var weixin      = require(paths.lib.weixin);
+
+var format      = require('util').format;
+var assert      = require('assert');
 var parseString = require('xml2js').parseString;
 
 var weixin_data = require(paths.test.weixin_data);
-var config = require(paths.config);
+var config      = require(paths.config);
 
-var to = 'gh_f7527586bc92', from = 'NZf2QSoejkO52d6Ikj_s0wwojS7j',
-    context = { FromUserName: from, ToUserName: to };
+var to          = 'gh_f7527586bc92',
+    from        = 'NZf2QSoejkO52d6Ikj_s0wwojS7j',
+    context     = { FromUserName: from, ToUserName: to };
 
 describe('authentication functionality', function(){
   describe('for get requests', function(){
@@ -50,7 +52,8 @@ describe('authentication functionality', function(){
 });
 
 var make_xml_post_request = function() {
-  return request(app).post('/weixin').set('Content-Type', 'text/xml').query(weixin_data.post_query);
+  // type('xml') => set('Content-Type', 'text/xml')
+  return request(app).post('/weixin').type('xml').query(weixin_data.post_query);
 };
 
 describe('subscription functionality', function(){

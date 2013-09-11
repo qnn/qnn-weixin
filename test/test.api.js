@@ -1,12 +1,13 @@
 process.env['NODE_ENV'] = 'test';
 
-var app = require('../app');
-var request = require('supertest');
-var assert = require('assert');
-
 require('js-yaml');
-var paths = require('../paths');
-var config = require(paths.config);
+
+var app     = require('../app');
+var request = require('supertest');
+var assert  = require('assert');
+
+var paths   = require('../paths');
+var config  = require(paths.config);
 
 describe('given nothing', function(){
   it('should return all stores', function(done){
