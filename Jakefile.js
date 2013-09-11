@@ -146,7 +146,7 @@ task('coord', function(){
   function save_stores_list() {
     var json_string = JSON.stringify(stores_list, null, 2);
     json_string = json_string.replace(/\n\s{8}/g, '').replace(/\n\s{6}\]/g, ']') + '\n';
-    require('fs').writeFile('./stores.json', json_string, function(err){
+    require('fs').writeFile(paths.stores, json_string, function(err){
       if (err) console.log('ERROR: ' + err);
     })
   }
