@@ -1,3 +1,5 @@
+require('js-yaml');
+
 var paths         = require('./paths');
 var child_process = require('child_process');
 var STDOUT        = {
@@ -9,6 +11,7 @@ var STDOUT        = {
 var https         = require('https');
 var format        = require('util').format;
 var token         = require(paths.weixin.token);
+var config        = require(paths.config)
 
 task('default', function(){
   var jake = child_process.spawn('jake', ['-T']);
@@ -124,25 +127,62 @@ var get_access_token = function(done) {
   });
 };
 
-var menu_json_to_yaml = function(json) {
-  var menus = json.menu.button;
+var menu_json_to_yaml = function(menus) {
+  var parse = function(object) {
+    switch (object.type) {
+    case 'view':  return ' ' + object.url;
+    case 'click': return ' ' + object.key;
+    }
+    return '';
+  };
+
+  menus = menus.button;
   var yaml = 'menus:';
   for (var i = 0; i < menus.length; i++) {
     yaml += '\n  ' + menus[i]['name'] + ':';
-    var submenus = menus[i]['sub_button'];
-    var submenus_count = 0;
-    for (var j = 0; j < submenus.length; j++) {
-      if (!submenus[j].hasOwnProperty('name')) continue;
-      yaml += '\n    ' + submenus[j].name + ': ';
-      if (submenus[j].type == 'view') {
-        yaml += submenus[j].url;
+    if (menus[i].hasOwnProperty('sub_button')) {
+      var submenus = menus[i]['sub_button'];
+      var submenus_count = 0;
+      for (var j = 0; j < submenus.length; j++) {
+        if (!submenus[j].hasOwnProperty('name')) continue;
+        yaml += '\n    ' + submenus[j].name + ':';
+        yaml += parse(submenus[j]);
+        submenus_count++;
       }
-      submenus_count++;
+      // remove parent if no child
+      if (submenus_count == 0)
+        yaml = yaml.substring(0, yaml.lastIndexOf("\n"));
+    } else {
+      yaml += parse(menus[i]);
     }
-    // remove parent if no child
-    if (submenus_count == 0) yaml = yaml.substring(0, yaml.lastIndexOf("\n"));
   }
   return yaml;
+};
+
+var menu_yaml_to_json = function(yaml) {
+  var parse = function(object, key) {
+    if (/^https?:\/\//.test(object[key])) {
+      return { type: 'view', name: key, url: object[key] };
+    } else {
+      return { type: 'click', name: key, key: object[key] };
+    }
+  };
+
+  var json = { button: [] };
+  for (var menu in yaml.menus) {
+    var button = {};
+    if (yaml.menus[menu] instanceof Object) {
+      button['name'] = menu;
+      button['sub_button'] = [];
+      for (var submenu in yaml.menus[menu]) {
+        button['sub_button'].push(parse(yaml.menus[menu], submenu));
+      }
+    } else {
+      button = parse(yaml.menus, menu);
+    }
+    json.button.push(button);
+  }
+  return json;
 };
 
 namespace('menu', function(){
@@ -153,7 +193,10 @@ namespace('menu', function(){
         var body = '';
         res.on('data', function (chunk) { body += chunk; });
         res.on('end', function(){
-          console.log('Menu in YAML:\n' + menu_json_to_yaml(JSON.parse(body)));
+          console.log('>>> Online menu:');
+          console.log(menu_json_to_yaml(JSON.parse(body).menu));
+          console.log('>>> Local menu:');
+          console.log(menu_json_to_yaml(menu_yaml_to_json({ menus: config.menus })));
         });
       });
     });
