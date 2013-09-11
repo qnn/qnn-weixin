@@ -33,11 +33,6 @@ html
       var map = new BMap.Map("map");
       map.enableScrollWheelZoom();
       map.addControl(new BMap.NavigationControl());
-      var myCity = new BMap.LocalCity();
-      myCity.get(function(result){
-        var cityName = result.name;
-        map.centerAndZoom(cityName, 11);
-      });
       var icon_green = new BMap.Icon('/images/marker_green.png', new BMap.Size(20, 32), {
         anchor: new BMap.Size(10, 30),
         infoWindowAnchor: new BMap.Size(10, 0)
@@ -46,14 +41,19 @@ html
         anchor: new BMap.Size(10, 30),
         infoWindowAnchor: new BMap.Size(10, 0)
       });
-    - if (tolat && tolng)
+    - if (lat && lng && tolat && tolng)
       script.
         var p1 = new BMap.Point(#{lng}, #{lat});      // where the user is
         var p2 = new BMap.Point(#{tolng}, #{tolat});  // where the store is
         var driving = new BMap.DrivingRoute(map, { renderOptions: { map: map, autoViewport: true} });
         driving.search(p1, p2);
-    - else
+    - else if (lat && lng)
       script.
+        var myCity = new BMap.LocalCity();
+        myCity.get(function(result){
+          var cityName = result.name;
+          map.centerAndZoom(cityName, 11);
+        });
         var storeInfo = function(name, address, tel, store_lat, store_lng){
           return '<h2 style="margin: 0; padding: 0;">' + name + '</h2>' +
             '<p>地址：' + address + '</p>' +
@@ -85,3 +85,6 @@ html
           }
         };
       script(src='/api/stores?lat=#{lat}&lng=#{lng}&count=#{count}&callback=stores2points')
+    - else
+      script.
+        map.centerAndZoom(new BMap.Point(113.216673, 22.849068), 11);
