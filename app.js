@@ -1,14 +1,15 @@
 var express = require('express');
-var http = require('http');
-var path = require('path');
-var fs = require('fs');
-var app = express();
+var http    = require('http');
+var path    = require('path');
+var fs      = require('fs');
+var app     = express();
 
 // all environments
-app.set('port', process.env.PORT || 3000);
-app.set('views', __dirname + '/views');
+app.set('port',        process.env.PORT || 3000);
+app.set('views',       __dirname + '/views');
 app.set('view engine', 'jade');
 app.set('json spaces', 0);
+
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
@@ -33,20 +34,22 @@ if ('production' == app.get('env')) {
   app.set('port', SOCKET_FILE);
 }
 
+// routes:
+var web    = require('./routes/web');
+var weixin = require('./routes/weixin');
+var api    = require('./routes/api');
+
 // web:
-var web = require('./routes/web');
-app.get('/', web.index);
-app.get('/stores/:store?', web.stores);
-app.get('/maps', web.maps);
+app.get('/'               , web.index);
+app.get('/stores/:store?' , web.stores);
+app.get('/maps'           , web.maps);
 
 // weixin:
-var weixin = require('./routes/weixin');
-app.get('/weixin', weixin.get);
-app.post('/weixin', weixin.post);
+app.get('/weixin'         , weixin.get);
+app.post('/weixin'        , weixin.post);
 
 // api:
-var api = require('./routes/api');
-app.get('/api/stores', api.stores);
+app.get('/api/stores'     , api.stores);
 
 // if nothing matches, return 404
 app.use(function(req, res){
@@ -54,7 +57,9 @@ app.use(function(req, res){
 });
 
 http.createServer(app).listen(app.get('port'), function(){
-  if (fs.existsSync(SOCKET_FILE)) fs.chmodSync(SOCKET_FILE, 666); // some system need this to work right;
+  if (fs.existsSync(SOCKET_FILE)) {
+    fs.chmodSync(SOCKET_FILE, 666); // some system need this to work right;
+  }
   console.log('Express server listening on port ' + app.get('port'));
 });
 

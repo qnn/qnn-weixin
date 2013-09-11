@@ -1,4 +1,4 @@
-var paths = require('../paths');
+var paths  = require('../paths');
 var weixin = require(paths.lib.weixin);
 
 var verify = function(req, res){

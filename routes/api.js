@@ -1,12 +1,13 @@
 exports.stores = function(req, res){  // sort by distance
-  var latitude = req.query.lat;
-  var longitude = req.query.lng;
-  var count = req.query.count;
-  var start = req.query.start;
-  var callback = req.query.callback;
+  var latitude    = req.query.lat;
+  var longitude   = req.query.lng;
+  var count       = req.query.count;
+  var start       = req.query.start;
+  var callback    = req.query.callback;
 
-  var paths = require('../paths');
-  var store = require(paths.lib.store);
+  var paths       = require('../paths');
+  var store       = require(paths.lib.store);
+
   // remove stores.json from module caches as its content was manipulated. it will be 're-required'.
   delete require.cache[require.resolve(paths.stores)];
   var stores_list = store.flatten(require(paths.stores));

@@ -1,10 +1,10 @@
-var paths = require('./paths');
+var paths         = require('./paths');
 var child_process = require('child_process');
-var STDOUT = {
-  write: function(data){
-    process.stdout.write(data.toString());
-  }
-};
+var STDOUT        = {
+                      write: function(data){
+                        process.stdout.write(data.toString());
+                      }
+                    };
 
 task('default', function(){
   var jake = child_process.spawn('jake', ['-T']);
