@@ -25,37 +25,63 @@ html
         color: #ffffff;
         text-decoration: none;
         border-radius: 5px;
+        margin-right: 10px;
       }
   body
     #map
     script.
       var map = new BMap.Map("map");
       map.enableScrollWheelZoom();
+      map.addControl(new BMap.NavigationControl());
       var myCity = new BMap.LocalCity();
       myCity.get(function(result){
         var cityName = result.name;
         map.centerAndZoom(cityName, 11);
       });
-      var storeInfo = function(name, address, tel){
-        return '<h2 style="margin: 0; padding: 0;">' + name + '</h2>' +
-          '<p>地址：' + address + '</p>' +
-          '<p>电话：' + tel + '</p>' +
-          '<p><a class="details" href="/stores/' + encodeURI(name) + '">查看详细</a></p>';
-      };
-      var addMarker = function(point, content){
-        var marker = new BMap.Marker(point);
-        map.addOverlay(marker);
-        var infoWindow = new BMap.InfoWindow(content);
-        marker.addEventListener('click', function(){
-          this.openInfoWindow(infoWindow);
-        });
-      };
-      var stores2points = function(stores_obj){
-        var stores = stores_obj.stores;
-        for(var i = 0; i < stores.length; i++) {
-          var store = stores[i];
-          var point = new BMap.Point(store[10], store[9]);
-          addMarker(point, storeInfo(store[0], store[1] + (store[1] != store[2] ? store[2] : '') + store[3] + store[4], store[5]));
-        }
-      };
-    script(src='/api/stores?lat=#{lat}&lng=#{lng}&count=#{count}&callback=stores2points')
+      var icon_green = new BMap.Icon('/images/marker_green.png', new BMap.Size(20, 32), {
+        anchor: new BMap.Size(10, 30),
+        infoWindowAnchor: new BMap.Size(10, 0)
+      });
+      var icon_red = new BMap.Icon('/images/marker_red.png', new BMap.Size(20, 32), {
+        anchor: new BMap.Size(10, 30),
+        infoWindowAnchor: new BMap.Size(10, 0)
+      });
+    - if (tolat && tolng)
+      script.
+        var p1 = new BMap.Point(#{lng}, #{lat});      // where the user is
+        var p2 = new BMap.Point(#{tolng}, #{tolat});  // where the store is
+        var driving = new BMap.DrivingRoute(map, { renderOptions: { map: map, autoViewport: true} });
+        driving.search(p1, p2);
+    - else
+      script.
+        var storeInfo = function(name, address, tel, store_lat, store_lng){
+          return '<h2 style="margin: 0; padding: 0;">' + name + '</h2>' +
+            '<p>地址：' + address + '</p>' +
+            '<p>电话：' + tel + '</p>' +
+            '<p><a class="details" href="/stores/' + encodeURI(name) + '?lat=#{lat}&lng=#{lng}">查看详细</a>' +
+            '<a class="details" href="/maps?lat=#{lat}&lng=#{lng}&tolat='+store_lat+'&tolng='+store_lng+'">查找路线</a></p>';
+        };
+
+        var addMarker = function(point, icon, content){
+          var marker = new BMap.Marker(point, { icon: icon });
+          map.addOverlay(marker);
+          var infoWindow = new BMap.InfoWindow(content);
+          marker.addEventListener('click', function(){
+            this.openInfoWindow(infoWindow);
+          });
+        };
+
+        var point = new BMap.Point(#{lng}, #{lat});
+        addMarker(point, icon_green, '这里是你大概所在的位置。');
+
+        var stores2points = function(stores_obj){
+          var stores = stores_obj.stores;
+          for(var i = 0; i < stores.length; i++) {
+            var store = stores[i];
+            var point = new BMap.Point(store[10], store[9]);
+            addMarker(point, icon_red, storeInfo(store[0], store[1] +
+                      (store[1] != store[2] ? store[2] : '') + store[3] + store[4], store[5],
+                      store[9], store[10]));
+          }
+        };
+      script(src='/api/stores?lat=#{lat}&lng=#{lng}&count=#{count}&callback=stores2points')

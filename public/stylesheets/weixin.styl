@@ -3,6 +3,7 @@ body
 
 a
   color blue
+  text-decoration none
 
 .msg-wrapper
   max-width 480px
@@ -12,6 +13,9 @@ a
     margin 25px 15px
     box-shadow 0px 3px 12px 0px #747474
     border-radius 10px
+  a.msg-item
+    &:hover
+      background #efefef
   .msg-item
     width 100%
     display table
@@ -37,9 +41,12 @@ a
       border-bottom-left-radius 10px
       border-bottom-right-radius 10px
     &:hover
-      background #efefef
       color #000
       text-decoration none
+    &.blue_link
+      color blue
+      &:hover
+        color blue
     .msg-text
       display table-cell
       font-size 16px
