@@ -145,3 +145,38 @@ describe('find nearby stores with position/coordinates functionality', function(
     });
   });
 });
+
+var determine_type = function(robot){
+  if (robot.sound) return 'sound';
+  return null;
+};
+
+describe('robot functionality', function(){
+  describe('for those regular expressions robot', function(){
+    for (var i = 0; i < config.robots.length; i++) {
+      var robot = config.robots[i];
+      var tests = robot.tests;
+      for (var j = 0; j < tests.length; j++) {
+        var type = determine_type(robot);
+        if (!type) continue;
+        describe('when user sends ' + tests[j], function(){
+          var test = tests[j];
+          var sound = config.robots[i].sound;
+          it('should return a ' + type, function(done){
+            make_xml_post_request()
+              .send(format(weixin_data.text, to, from, test))
+              .expect(200)
+              .expect(weixin.respond_with_sound({
+                FromUserName: from,
+                ToUserName: to
+              }, sound))
+              .end(function(err, res){
+                if (err) throw err;
+                done();
+              });
+          });
+        });
+      }
+    }
+  })
+});

@@ -13,6 +13,12 @@ newly_subscribed: |
   缔造全能安全生活空间！ 
   全国客服热线：400-830-4555。
 
+# 机器人自动回复
+robots:
+  - regex: ["^(gnu|linux|gnu[\\/+\\-\\s&.,:]?linux)$", "i"]
+    tests: ['GNU','LiNux','GnU/LiNuX']
+    sound: /gnulinux.mp3
+
 # 最近店铺列表第一个大项的文字
 title_of_first_nearby_store: 打开地图查看各销售网点位置
 
