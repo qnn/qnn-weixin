@@ -14,7 +14,8 @@ var parseString = require('xml2js').parseString;
 var weixin_data = require(paths.test.weixin_data);
 var config = require(paths.config);
 
-var to = 'gh_f7527586bc92', from = 'NZf2QSoejkO52d6Ikj_s0wwojS7j';
+var to = 'gh_f7527586bc92', from = 'NZf2QSoejkO52d6Ikj_s0wwojS7j',
+    context = { FromUserName: from, ToUserName: to };
 
 describe('authentication functionality', function(){
   describe('for get requests', function(){
@@ -58,10 +59,7 @@ describe('subscription functionality', function(){
       make_xml_post_request()
         .send(format(weixin_data.subscribe, to, from))
         .expect(200)
-        .expect(weixin.respond_with_text({
-          FromUserName: from,
-          ToUserName: to
-        }, config.newly_subscribed))
+        .expect(weixin.respond_with_text(context, config.newly_subscribed))
         .end(function(err, res){
           if (err) throw err;
           done();
@@ -118,10 +116,7 @@ describe('find nearby stores with position/coordinates functionality', function(
       make_xml_post_request()
         .send(format(weixin_data.find_nearby_stores, to, from, x, y))
         .expect(200)
-        .expect(weixin.respond_with_list({
-          FromUserName: from,
-          ToUserName: to
-        }, list))
+        .expect(weixin.respond_with_list(context, list))
         .end(function(err, res){
           if (err) throw err;
           validate_content(res.text, done);
@@ -134,10 +129,7 @@ describe('find nearby stores with position/coordinates functionality', function(
       make_xml_post_request()
         .send(format(weixin_data.text, to, from, x + ', ' + y))
         .expect(200)
-        .expect(weixin.respond_with_list({
-          FromUserName: from,
-          ToUserName: to
-        }, list))
+        .expect(weixin.respond_with_list(context, list))
         .end(function(err, res){
           if (err) throw err;
           validate_content(res.text, done);
@@ -162,7 +154,6 @@ describe('robot functionality', function(){
         if (!type) continue;
         describe('when user sends ' + (tests[j] || robot.exact), function(){
           var test = tests[j] || robot.exact;
-          var context = { FromUserName: from, ToUserName: to };
           var expect;
           switch(type){
           case 'sound':
