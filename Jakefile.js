@@ -159,7 +159,7 @@ var menu_json_to_yaml = function(menus) {
   return yaml;
 };
 
-var menu_yaml_to_json = function(yaml) {
+var menu_yaml_to_json = function(menus) {
   var parse = function(object, key) {
     if (/^https?:\/\//.test(object[key])) {
       return { type: 'view', name: key, url: object[key] };
@@ -169,16 +169,16 @@ var menu_yaml_to_json = function(yaml) {
   };
 
   var json = { button: [] };
-  for (var menu in yaml.menus) {
+  for (var menu in menus) {
     var button = {};
-    if (yaml.menus[menu] instanceof Object) {
+    if (menus[menu] instanceof Object) {
       button['name'] = menu;
       button['sub_button'] = [];
-      for (var submenu in yaml.menus[menu]) {
-        button['sub_button'].push(parse(yaml.menus[menu], submenu));
+      for (var submenu in menus[menu]) {
+        button['sub_button'].push(parse(menus[menu], submenu));
       }
     } else {
-      button = parse(yaml.menus, menu);
+      button = parse(menus, menu);
     }
     json.button.push(button);
   }
@@ -196,7 +196,7 @@ namespace('menu', function(){
           console.log('>>> Online menu:');
           console.log(menu_json_to_yaml(JSON.parse(body).menu));
           console.log('>>> Local menu:');
-          console.log(menu_json_to_yaml(menu_yaml_to_json({ menus: config.menus })));
+          console.log(menu_json_to_yaml(menu_yaml_to_json(config.menus)));
         });
       });
     });
