@@ -12,13 +12,18 @@ task('default', function(){
 
 /*
  * Forever
+ * 
+ * accepts arguments: jake list\['--plain'\]
  */
 
-var FOREVER = function(script){
+var FOREVER = function(script, arguments){
+  var args = [];
+  for (argument in arguments) args.push(arguments[argument]);
+
   child_process.exec('which forever', function(error, stdout, stderr){
     if (!error && stdout) {
       process.env['NODE_ENV'] = 'production'; // production mode
-      script(stdout.trim());
+      script(stdout.trim(), args);
     } else {
       console.log('Please install forever first: npm -g install forever');
     }
@@ -27,8 +32,8 @@ var FOREVER = function(script){
 
 var PID_FILE = __dirname + '/tmp/pids/forever.pid';
 
-var START = function(verb){
-  FOREVER(function(forever_path){
+var START = function(verb, arguments){
+  FOREVER(function(forever_path, arguments){
     var forever = child_process.spawn(forever_path, [
       verb,
       '-m', 5,
@@ -40,56 +45,58 @@ var START = function(verb){
       '-e', __dirname + '/log/forever.stderr.log',
       '--pidFile', PID_FILE,
       'app.js'
-    ]);
+    ].concat(arguments));
     forever.stdout.on('data', STDOUT.write);
     forever.stderr.on('data', STDOUT.write);
-  });
+  }, arguments);
 };
 
 desc('forever start');
 task('start', function(){
+  var args = arguments;
   require('fs').exists(PID_FILE, function(exists){
     if (exists) {
       console.log('Please use "jake stop" to stop current script first.');
       console.log('If problem still exists, manually remove the PID file:');
       console.log('> rm -f ' + PID_FILE);
     } else {
-      START('start');
+      START('start', args);
     }
   });
 });
 
 desc('forever restart');
 task('restart', function(){
+  var args = arguments;
   require('fs').exists(PID_FILE, function(exists){
     if (exists) {
-      START('restart');
+      START('restart', args);
     } else {
-      START('start');
+      START('start', args);
     }
   });
 });
 
 desc('forever stop');
 task('stop', function(){
-  FOREVER(function(forever_path){
+  FOREVER(function(forever_path, arguments){
     var forever = child_process.spawn(forever_path, [
       'stop',
       '--pidFile', PID_FILE,
       'app.js'
-    ]);
+    ].concat(arguments));
     forever.stdout.on('data', STDOUT.write);
     forever.stderr.on('data', STDOUT.write);
-  });
+  }, arguments);
 });
 
 desc('forever list');
 task('list', function(){
-  FOREVER(function(forever_path){
-    var forever = child_process.spawn(forever_path, ['list']);
+  FOREVER(function(forever_path, arguments){
+    var forever = child_process.spawn(forever_path, [ 'list' ].concat(arguments));
     forever.stdout.on('data', STDOUT.write);
     forever.stderr.on('data', STDOUT.write);
-  });
+  }, arguments);
 });
 
 /*
