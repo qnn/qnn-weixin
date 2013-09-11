@@ -45,5 +45,9 @@ exports.stores = function(req, res, next) {
 exports.maps = function(req, res) {
   var coord = validate_coordinates(req.query);
   var tocoord = validate_coordinates(req.query, 'to');
-  res.render('maps', { lat: coord.lat, lng: coord.lng, tolat: tocoord.tolat, tolng: tocoord.tolng, count: 30 });
+  res.render('maps', {
+      lat: coord.lat,         lng: coord.lng,
+    tolat: tocoord.tolat,   tolng: tocoord.tolng,
+    count: 30
+  });
 };
