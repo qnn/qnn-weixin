@@ -1,8 +1,7 @@
+# 这个应用的访问地址
 base_url: http://weixin.qnnsafe.com
 
-#################
-# subscription: #
-#################
+# 关注后显示的内容
 newly_subscribed: |
   您好！欢迎加入全能保险柜微信平台这个大家庭！
   需要了解什么呢？让我来帮您解答吧！
@@ -14,18 +13,19 @@ newly_subscribed: |
   缔造全能安全生活空间！ 
   全国客服热线：400-830-4555。
 
-#######################
-# find nearby stores: #
-#######################
-
+# 最近店铺列表第一个大项的文字
 title_of_first_nearby_store: 打开地图查看各销售网点位置
 
-# resolution: 80x80
+# 最近店铺每个项目右边的图像地址，最佳分辨率是80x80
 default_nearby_store_image_url: http://www.qnnsafe.com/assets/images/qnn-icon-152.png
 
+# 最近店铺显示个数
 number_of_nearby_stores_to_list: 3
 
-# test:
+# ---------------------------------------------------------
+# 用于测试的数据，如无必要，请勿更改
+# test.coord              用于测试的坐标
+# test.nearby_store_name  离坐标最近的店铺名
 test:
   coord:
     lat: 22.849068
