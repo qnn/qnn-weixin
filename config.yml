@@ -14,10 +14,17 @@ newly_subscribed: |
   全国客服热线：400-830-4555。
 
 # 机器人自动回复
+# 检查类型：regex, exact
+# 测试内容：tests
+# 回复类型：words, sound
 robots:
   - regex: ["^(gnu|linux|gnu[\\/+\\-\\s&.,:]?linux)$", "i"]
     tests: ['GNU','LiNux','GnU/LiNuX']
     sound: ['/sounds/gnulinux.mp3', '/sounds/gnulinux.mp3', 'What Is GNU/Linux?', 'Richard Stallman']
+  - exact: help
+    words: |
+      This is an open source app. For more info, visit
+      <a href="https://github.com/qnn/qnn-weixin">the repo on GitHub</a>.
 
 # 最近店铺列表第一个大项的文字
 title_of_first_nearby_store: 打开地图查看各销售网点位置
