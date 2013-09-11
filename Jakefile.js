@@ -179,6 +179,7 @@ var menu_yaml_to_json = function(menus) {
       }
     } else {
       button = parse(menus, menu);
+      button['sub_button'] = [];
     }
     json.button.push(button);
   }
@@ -194,9 +195,61 @@ namespace('menu', function(){
         res.on('data', function (chunk) { body += chunk; });
         res.on('end', function(){
           console.log('>>> Online menu:');
-          console.log(menu_json_to_yaml(JSON.parse(body).menu));
+          body = JSON.parse(body);
+          if (body.hasOwnProperty('menu')) {
+            console.log(menu_json_to_yaml(body.menu));
+          } else if (body.hasOwnProperty('errcode')) {
+            console.log('Failed: ' + body.errmsg);
+          }
           console.log('>>> Local menu:');
           console.log(menu_json_to_yaml(menu_yaml_to_json(config.menus)));
+        });
+      });
+    });
+  });
+
+  desc('create/update menu');
+  task('create', function(){
+    var menu_string = JSON.stringify(menu_yaml_to_json(config.menus), null, 0);
+
+    get_access_token(function(access_token){
+      var options = require('url').parse(format(paths.weixin.api.menu.create, access_token));
+      options['method'] = 'POST';
+      options['headers'] = {
+        'Content-Length': menu_string.length
+      };
+      var request = https.request(options, function(res){
+        var body = '';
+        res.on('data', function (chunk) { body += chunk; });
+        res.on('end', function(){
+          var err = JSON.parse(body);
+          if (err.errcode == 0) {
+            console.log('Success: Menu was successfully modifed.');
+          } else {
+            console.log('Failed: ' + err.errmsg);
+            console.log(menu_string);
+          }
+        });
+      });
+      request.write(menu_string);
+      request.end();
+    });
+  });
+
+  desc('destroy current menu');
+  task('destroy', function(){
+    get_access_token(function(access_token){
+      https.get(format(paths.weixin.api.menu.destroy, access_token), function(res){
+        var body = '';
+        res.on('data', function (chunk) { body += chunk; });
+        res.on('end', function(){
+          var err = JSON.parse(body);
+          if (err.errcode == 0) {
+            console.log('Success: Menu was successfully destroyed.');
+          } else {
+            console.log('Failed: ' + err.errmsg);
+            console.log(menu_string);
+          }
         });
       });
     });
