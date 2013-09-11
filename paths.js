@@ -20,3 +20,16 @@ exports.test     = {
                    };
 
 exports.stores   = __dirname + '/stores.json';
+
+var prefix = 'https://api.weixin.qq.com/cgi-bin';
+
+exports.weixin['api'] = {
+                          token: {
+                            get:    prefix + '/token?grant_type=client_credential&appid=%s&secret=%s'
+                          },
+                          menu: {
+                            create: prefix + '/menu/create?access_token=%s',
+                            show:   prefix + '/menu/get?access_token=%s',
+                            destoy: prefix + '/menu/delete?access_token=%s'
+                          }
+                        };

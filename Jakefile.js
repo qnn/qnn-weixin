@@ -6,6 +6,10 @@ var STDOUT        = {
                       }
                     };
 
+var https         = require('https');
+var format        = require('util').format;
+var token         = require(paths.weixin.token);
+
 task('default', function(){
   var jake = child_process.spawn('jake', ['-T']);
   jake.stdout.on('data', STDOUT.write);
@@ -98,6 +102,62 @@ task('list', function(){
     forever.stdout.on('data', STDOUT.write);
     forever.stderr.on('data', STDOUT.write);
   }, arguments);
+});
+
+/*
+ * Menu
+ */
+
+var get_access_token = function(done) {
+  https.get(format(paths.weixin.api.token.get, token.appid, token.appsecret), function(res){
+    var body = '';
+    res.on('data', function (chunk) { body += chunk; });
+    res.on('end', function(){
+      var a_t = JSON.parse(body);
+      if (a_t.hasOwnProperty('access_token') && a_t.hasOwnProperty('expires_in')) {
+        done(a_t.access_token);
+      } else {
+        console.log('Failed to get access token:');
+        console.log(body);
+      }
+    });
+  });
+};
+
+var menu_json_to_yaml = function(json) {
+  var menus = json.menu.button;
+  var yaml = 'menus:';
+  for (var i = 0; i < menus.length; i++) {
+    yaml += '\n  ' + menus[i]['name'] + ':';
+    var submenus = menus[i]['sub_button'];
+    var submenus_count = 0;
+    for (var j = 0; j < submenus.length; j++) {
+      if (!submenus[j].hasOwnProperty('name')) continue;
+      yaml += '\n    ' + submenus[j].name + ': ';
+      if (submenus[j].type == 'view') {
+        yaml += submenus[j].url;
+      }
+      submenus_count++;
+    }
+    // remove parent if no child
+    if (submenus_count == 0) yaml = yaml.substring(0, yaml.lastIndexOf("\n"));
+  }
+  return yaml;
+};
+
+namespace('menu', function(){
+  desc('show current menu');
+  task('show', function(){
+    get_access_token(function(access_token){
+      https.get(format(paths.weixin.api.menu.show, access_token), function(res){
+        var body = '';
+        res.on('data', function (chunk) { body += chunk; });
+        res.on('end', function(){
+          console.log('Menu in YAML:\n' + menu_json_to_yaml(JSON.parse(body)));
+        });
+      });
+    });
+  });
 });
 
 /*

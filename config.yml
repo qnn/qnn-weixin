@@ -26,6 +26,17 @@ robots:
       This is an open source app. For more info, visit
       <a href="https://github.com/qnn/qnn-weixin">the repo on GitHub</a>.
 
+menus:
+  全能之家:
+    全能官网: http://www.qnnsafe.com/
+    招商加盟: http://www.qnnsafe.com.cn/
+    全能产品介绍: MENU_PRODUCTS
+  自助服务:
+    导购精灵: MENU_BUYERS_GUIDE
+    常见问题: MENU_FAQ
+    清洁保养: MENU_CLEAN
+  全能资讯: MENU_NEWS
+
 # 最近店铺列表第一个大项的文字
 title_of_first_nearby_store: 打开地图查看各销售网点位置
 
