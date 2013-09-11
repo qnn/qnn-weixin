@@ -26,6 +26,7 @@ Nginx configurations:
       }
       try_files $uri/index.html $uri.html $uri @app;
       location @app {
+        proxy_intercept_errors on;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header Host $http_host;
         proxy_redirect off;
