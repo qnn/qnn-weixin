@@ -112,12 +112,18 @@ task('list', function(){
  */
 
 var get_access_token = function(done) {
-  https.get(format(paths.weixin.api.token.get, token.appid, token.appsecret), function(res){
+  var request = https.request({
+    host: paths.weixin.api.host,
+    port: paths.weixin.api.port,
+    path: format(paths.weixin.api.token.get, token.appid, token.appsecret),
+    method: 'GET'
+  }, function(res){
     var body = '';
     res.on('data', function (chunk) { body += chunk; });
     res.on('end', function(){
       var a_t = JSON.parse(body);
       if (a_t.hasOwnProperty('access_token') && a_t.hasOwnProperty('expires_in')) {
+        console.log('Success: Got access token.');
         done(a_t.access_token);
       } else {
         console.log('Failed to get access token:');
@@ -125,6 +131,7 @@ var get_access_token = function(done) {
       }
     });
   });
+  request.end();
 };
 
 var menu_json_to_yaml = function(menus) {
@@ -140,7 +147,8 @@ var menu_json_to_yaml = function(menus) {
   var yaml = 'menus:';
   for (var i = 0; i < menus.length; i++) {
     yaml += '\n  ' + menus[i]['name'] + ':';
-    if (menus[i].hasOwnProperty('sub_button')) {
+    if (menus[i].hasOwnProperty('sub_button') &&
+        menus[i]['sub_button'].length > 0) {
       var submenus = menus[i]['sub_button'];
       var submenus_count = 0;
       for (var j = 0; j < submenus.length; j++) {
@@ -190,7 +198,12 @@ namespace('menu', function(){
   desc('show current menu');
   task('show', function(){
     get_access_token(function(access_token){
-      https.get(format(paths.weixin.api.menu.show, access_token), function(res){
+      var request = https.request({
+        host: paths.weixin.api.host,
+        port: paths.weixin.api.port,
+        path: format(paths.weixin.api.menu.show, access_token),
+        method: 'GET'
+      }, function(res){
         var body = '';
         res.on('data', function (chunk) { body += chunk; });
         res.on('end', function(){
@@ -205,20 +218,25 @@ namespace('menu', function(){
           console.log(menu_json_to_yaml(menu_yaml_to_json(config.menus)));
         });
       });
+      request.end();
     });
   });
 
   desc('create/update menu');
   task('create', function(){
-    var menu_string = JSON.stringify(menu_yaml_to_json(config.menus), null, 0);
+    var menu_string = new Buffer(JSON.stringify(menu_yaml_to_json(config.menus), null, 0), 'utf8');
 
     get_access_token(function(access_token){
-      var options = require('url').parse(format(paths.weixin.api.menu.create, access_token));
-      options['method'] = 'POST';
-      options['headers'] = {
-        'Content-Length': menu_string.length
-      };
-      var request = https.request(options, function(res){
+      var request = https.request({
+        host: paths.weixin.api.host,
+        port: paths.weixin.api.port,
+        path: format(paths.weixin.api.menu.create, access_token),
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': menu_string.length
+        }
+      }, function(res){
         var body = '';
         res.on('data', function (chunk) { body += chunk; });
         res.on('end', function(){
@@ -239,7 +257,12 @@ namespace('menu', function(){
   desc('destroy current menu');
   task('destroy', function(){
     get_access_token(function(access_token){
-      https.get(format(paths.weixin.api.menu.destroy, access_token), function(res){
+      var request = https.request({
+        host: paths.weixin.api.host,
+        port: paths.weixin.api.port,
+        path: format(paths.weixin.api.menu.destroy, access_token),
+        method: 'GET'
+      }, function(res){
         var body = '';
         res.on('data', function (chunk) { body += chunk; });
         res.on('end', function(){
@@ -252,6 +275,7 @@ namespace('menu', function(){
           }
         });
       });
+      request.end();
     });
   });
 });

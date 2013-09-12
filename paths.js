@@ -21,15 +21,15 @@ exports.test     = {
 
 exports.stores   = __dirname + '/stores.json';
 
-var prefix = 'https://api.weixin.qq.com/cgi-bin';
-
 exports.weixin['api'] = {
-                          token: {
-                            get:     prefix + '/token?grant_type=client_credential&appid=%s&secret=%s'
-                          },
-                          menu: {
-                            create:  prefix + '/menu/create?access_token=%s',
-                            show:    prefix + '/menu/get?access_token=%s',
-                            destroy: prefix + '/menu/delete?access_token=%s'
-                          }
-                        };
+  host: 'api.weixin.qq.com',
+  port: 443,
+  token: {
+    get: '/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s'
+  },
+  menu: {
+    create:  '/cgi-bin/menu/create?access_token=%s',
+    show:    '/cgi-bin/menu/get?access_token=%s',
+    destroy: '/cgi-bin/menu/delete?access_token=%s',
+  }
+};
