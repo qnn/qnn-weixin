@@ -21,6 +21,15 @@ unsubscribe: |
   <EventKey><![CDATA[8342811380953159271]]></EventKey>
   </xml>
 
+click: |
+  <xml><ToUserName><![CDATA[%s]]></ToUserName>
+  <FromUserName><![CDATA[%s]]></FromUserName>
+  <CreateTime>1378622389</CreateTime>
+  <MsgType><![CDATA[event]]></MsgType>
+  <Event><![CDATA[CLICK]]></Event>
+  <EventKey><![CDATA[%s]]></EventKey>
+  </xml>
+
 text: |
   <xml>
   <ToUserName><![CDATA[%s]]></ToUserName>

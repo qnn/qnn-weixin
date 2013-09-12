@@ -25,6 +25,9 @@ robots:
     words: |
       This is an open source app. For more info, visit
       <a href="https://github.com/qnn/qnn-weixin">the repo on GitHub</a>.
+  - click: MENU_FAQ
+    words: |
+      <a href="http://www.qnnsafe.com/knowledge/">常见问题</a>
 
 menus:
   全能之家:

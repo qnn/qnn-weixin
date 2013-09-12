@@ -141,13 +141,53 @@ describe('find nearby stores with position/coordinates functionality', function(
   });
 });
 
-var determine_type = function(robot){
-  if (robot.sound) return 'sound';
-  if (robot.words) return 'text';
-  return null;
-};
-
 describe('robot functionality', function(){
+  var determine_type = function(robot){
+    if (robot.sound) return 'sound';
+    if (robot.words) return 'text';
+    return null;
+  };
+
+  var expect = function(robot, type) {
+    switch(type){
+    case 'sound':
+      return weixin.respond_with_sound(context, robot.sound);
+    case 'text':
+      return weixin.respond_with_text(context, robot.words);
+    }
+    return null;
+  }
+
+  var sending_text = function(robot, type, content) {
+    describe('when user sends ' + content, function(){
+      it('should return a ' + type, function(done){
+        make_xml_post_request()
+          .send(format(weixin_data.text, to, from, content))
+          .expect(200)
+          .expect(expect(robot, type))
+          .end(function(err, res){
+            if (err) throw err;
+            done();
+          });
+      });
+    });
+  };
+
+  var clicking_menu = function(robot, type){
+    describe('when user clicks ' + robot.click, function(){
+      it('should return a ' + type, function(done){
+        make_xml_post_request()
+          .send(format(weixin_data.click, to, from, robot.click))
+          .expect(200)
+          .expect(expect(robot, type))
+          .end(function(err, res){
+            if (err) throw err;
+            done();
+          });
+      });
+    });
+  };
+
   describe('for those regular expressions robot', function(){
     for (var i = 0; i < config.robots.length; i++) {
       var robot = config.robots[i];
@@ -155,28 +195,11 @@ describe('robot functionality', function(){
       for (var j = 0; j < tests.length; j++) {
         var type = determine_type(robot);
         if (!type) continue;
-        describe('when user sends ' + (tests[j] || robot.exact), function(){
-          var test = tests[j] || robot.exact;
-          var expect;
-          switch(type){
-          case 'sound':
-            expect = weixin.respond_with_sound(context, config.robots[i].sound);
-            break;
-          case 'text':
-            expect = weixin.respond_with_text(context, config.robots[i].words);
-            break;
-          }
-          it('should return a ' + type, function(done){
-            make_xml_post_request()
-              .send(format(weixin_data.text, to, from, test))
-              .expect(200)
-              .expect(expect)
-              .end(function(err, res){
-                if (err) throw err;
-                done();
-              });
-          });
-        });
+        if (robot.click) {
+          clicking_menu(robot, type);
+        } else {
+          sending_text(robot, type, tests[j] || robot.exact);
+        }
       }
     }
   })
