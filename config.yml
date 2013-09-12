@@ -28,6 +28,8 @@ robots:
   - click: MENU_FAQ
     words: |
       <a href="http://www.qnnsafe.com/knowledge/">常见问题</a>
+  - click: MENU_PRODUCTS
+    words: 学习中...
 
 menus:
   全能之家:
