@@ -111,15 +111,20 @@ task('list', function(){
 namespace('menu', function(){
   desc('show current menu');
   task('show', function(){
-    libweixinapi.show_menu(function(response, online_menu, local_menu){
-      console.log('>>> Online Menu:');
-      if (online_menu) {
-        console.log(online_menu);
+    libweixinapi.show_menu(function(response, remote_menu, local_menu){
+      console.log('>>> Local Menu <<<');
+      console.log(local_menu);
+      console.log('>>> Remote Menu <<<');
+      if (remote_menu) {
+        console.log(remote_menu);
       } else {
         console.log('Failed: ' + response);
       }
-      console.log('>>> Local Menu:');
-      console.log(local_menu);
+      if (local_menu == remote_menu) {
+        console.log('Nothing to do! Local menu is the same as the remote one.');
+      } else {
+        console.log('You can run jake menu:create to update remote menu.')
+      }
     });
   });
 
