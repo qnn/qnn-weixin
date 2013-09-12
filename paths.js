@@ -1,35 +1,35 @@
 switch (process.env['NODE_ENV']) {
 case 'test':
-  exports.weixin = { token: __dirname + '/token.test.json' };
+  exports.weixin   = { token: __dirname + '/token.test.json' };
   break;
 default:
-  exports.weixin = { token: __dirname + '/token.json' };
+  exports.weixin   = { token: __dirname + '/token.json' };
 }
 
-exports.lib      = {
-                     coord:            __dirname + '/lib/libcoord',
-                     store:            __dirname + '/lib/libstore',
-                     weixin:           __dirname + '/lib/libweixin',
-                     weixin_templates: __dirname + '/lib/weixin.templates.yml'
-                   };
+exports.weixin.api = {
+                       host: 'api.weixin.qq.com',
+                       port: 443,
+                       token: {
+                         get: '/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s'
+                       },
+                       menu: {
+                         create:  '/cgi-bin/menu/create?access_token=%s',
+                         show:    '/cgi-bin/menu/get?access_token=%s',
+                         destroy: '/cgi-bin/menu/delete?access_token=%s',
+                       }
+                     };
 
-exports.config   = __dirname + '/config.yml';
+exports.lib        = {
+                       coord:            __dirname + '/lib/libcoord',
+                       store:            __dirname + '/lib/libstore',
+                       weixin:           __dirname + '/lib/libweixin',
+                       weixin_templates: __dirname + '/lib/weixin.templates.yml'
+                     };
 
-exports.test     = {
-                     weixin_data: __dirname + '/test/test.weixin.data.yml'
-                   };
+exports.config     = __dirname + '/config.yml';
 
-exports.stores   = __dirname + '/stores.json';
+exports.test       = {
+                       weixin_data: __dirname + '/test/test.weixin.data.yml'
+                     };
 
-exports.weixin['api'] = {
-  host: 'api.weixin.qq.com',
-  port: 443,
-  token: {
-    get: '/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s'
-  },
-  menu: {
-    create:  '/cgi-bin/menu/create?access_token=%s',
-    show:    '/cgi-bin/menu/get?access_token=%s',
-    destroy: '/cgi-bin/menu/delete?access_token=%s',
-  }
-};
+exports.stores     = __dirname + '/stores.json';
