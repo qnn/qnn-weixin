@@ -23,6 +23,7 @@ exports.lib        = {
                        coord:            __dirname + '/lib/libcoord',
                        store:            __dirname + '/lib/libstore',
                        weixin:           __dirname + '/lib/libweixin',
+                       weixinapi:        __dirname + '/lib/libweixin.api',
                        weixin_templates: __dirname + '/lib/weixin.templates.yml'
                      };
 
