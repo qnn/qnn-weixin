@@ -165,15 +165,24 @@ task('token', function(){
     input: process.stdin,
     output: process.stdout
   });
-  rl.question('Enter your Weixin token: ', function(token){
-    if (token.length < 3 || token.length > 32) {
-      console.log('What you type does not look like a token. Aborted.');
-      rl.close();
-      return;
-    }
-    require('fs').writeFile(paths.weixin.token, JSON.stringify({
-      token: token
-    }, null, 2) + '\n', function(error){
+  var keys = ['token', 'appid', 'appsecret'];
+  var values = {};
+  var index = 0;
+  var ask = function(done){
+    rl.question('Enter your weixin ' + keys[index] + ': ', function(value){
+      values[keys[index]] = value;
+      index++;
+      if (index < keys.length) {
+        ask(done);
+      } else {
+        done();
+      }
+    });
+  }
+  ask(function(){
+    require('fs').writeFile(paths.weixin.token,
+                            JSON.stringify(values, null, 2) + '\n',
+                            function(error){
       console.log( (error ? 'Error saving token to file' :
                             'Token was saved to file') + ': ' + paths.weixin.token + '.');
       rl.close();
