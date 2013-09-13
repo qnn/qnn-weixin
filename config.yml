@@ -21,18 +21,23 @@ robots:
   - regex: ["^(gnu|linux|gnu[\\/+\\-\\s&.,:]?linux)$", "i"]
     tests: ['GNU','LiNux','GnU/LiNuX']
     sound: ['/sounds/gnulinux.mp3', '/sounds/gnulinux.mp3', 'What Is GNU/Linux?', 'Richard Stallman']
+
   - exact: help
     words: |
       This is an open source app. For more info, visit
       <a href="https://github.com/qnn/qnn-weixin">the repo on GitHub</a>.
+
   - click: MENU_FAQ
     words: |
       <a href="http://www.qnnsafe.com/knowledge/">常见问题</a>
-  - click: MENU_PRODUCTS
-    words: 学习中...
+
+  - click: ['MENU_PRODUCTS', 'MENU_BUYERS_GUIDE', 'MENU_CLEAN']
+    words: 抱歉，资料添加中，请稍后查阅...
+
   - click: MENU_FIND_STORE
     words: |
       点击屏幕下方功能键"+"，在展开的菜单中点选"位置"，发送你的坐标位置就可查找到离你最近的全能销售网点。
+      
       如果无法提供坐标，你也可以前往<a href="http://www.qnnsafe.com/network/">手机版官网</a>查询。
 
 menus:

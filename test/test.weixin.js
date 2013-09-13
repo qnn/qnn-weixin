@@ -173,11 +173,11 @@ describe('robot functionality', function(){
     });
   };
 
-  var clicking_menu = function(robot, type){
-    describe('when user clicks ' + robot.click, function(){
+  var clicking_menu = function(robot, type, click){
+    describe('when user clicks ' + click, function(){
       it('should return a ' + type, function(done){
         make_xml_post_request()
-          .send(format(weixin_data.click, to, from, robot.click))
+          .send(format(weixin_data.click, to, from, click))
           .expect(200)
           .expect(expect(robot, type))
           .end(function(err, res){
@@ -188,7 +188,7 @@ describe('robot functionality', function(){
     });
   };
 
-  describe('for those regular expressions robot', function(){
+  describe('for those robots', function(){
     for (var i = 0; i < config.robots.length; i++) {
       var robot = config.robots[i];
       var tests = robot.tests || [ '' ];
@@ -196,7 +196,13 @@ describe('robot functionality', function(){
         var type = determine_type(robot);
         if (!type) continue;
         if (robot.click) {
-          clicking_menu(robot, type);
+          if (robot.click instanceof Array) {
+            for (var k = 0; k < robot.click.length; k++) {
+              clicking_menu(robot, type, robot.click[k]);
+            }
+          } else {
+            clicking_menu(robot, type, robot.click);
+          }
         } else {
           sending_text(robot, type, tests[j] || robot.exact);
         }
