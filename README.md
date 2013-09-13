@@ -3,6 +3,8 @@ QNN-Weixin
 
 A Weixin (WeChat) management tool for QNN.
 
+[![Build Status](https://travis-ci.org/qnn/qnn-weixin.png?branch=master)](https://travis-ci.org/qnn/qnn-weixin)
+
 How to use
 ----------
 
