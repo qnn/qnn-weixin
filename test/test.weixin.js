@@ -208,5 +208,5 @@ describe('robot functionality', function(){
         }
       }
     }
-  })
+  });
 });
