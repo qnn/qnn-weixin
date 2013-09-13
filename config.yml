@@ -30,6 +30,9 @@ robots:
       <a href="http://www.qnnsafe.com/knowledge/">常见问题</a>
   - click: MENU_PRODUCTS
     words: 学习中...
+  - click: MENU_FIND_STORE
+    words: |
+      点击屏幕下方功能键"+"，在展开的菜单中点选"位置"，发送你的坐标位置就可查找到离你最近的销售网点。
 
 menus:
   全能之家:
@@ -37,6 +40,7 @@ menus:
     招商加盟: http://www.qnnsafe.com.cn/
     全能产品介绍: MENU_PRODUCTS
   自助服务:
+    查找网点: MENU_FIND_STORE
     导购精灵: MENU_BUYERS_GUIDE
     常见问题: MENU_FAQ
     清洁保养: MENU_CLEAN
