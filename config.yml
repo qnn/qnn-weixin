@@ -30,6 +30,9 @@ robots:
   - click: MENU_PRODUCTS
     lists: LIST_PRODUCTS
 
+  - click: MENU_FAQ
+    lists: LIST_FAQ
+
   - click: ['MENU_BUYERS_GUIDE', 'MENU_CLEAN']
     words: 抱歉，资料添加中，请稍后查阅...
 
@@ -55,6 +58,9 @@ menus:
 
 
 lists:
+  LIST_FAQ:
+    require: /data.yml
+    datakey: faqs
   LIST_PRODUCTS:
     link_base_url: http://www.qnnsafe.com
     image_base_url: http://www.qnnsafe.com/images/weixin/

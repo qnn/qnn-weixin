@@ -1,3 +1,5 @@
+exports.app_path   = __dirname;
+
 switch (process.env['NODE_ENV']) {
 case 'test':
   exports.weixin   = { token: __dirname + '/token.test.json' };
