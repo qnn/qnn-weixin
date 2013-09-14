@@ -145,6 +145,7 @@ describe('robot functionality', function(){
   var determine_type = function(robot){
     if (robot.sound) return 'sound';
     if (robot.words) return 'text';
+    if (robot.lists) return 'list';
     return null;
   };
 
@@ -154,6 +155,8 @@ describe('robot functionality', function(){
       return weixin.respond_with_sound(context, robot.sound);
     case 'text':
       return weixin.respond_with_text(context, robot.words);
+    case 'list':
+      return weixin.respond_with_list(context, weixin.make_robot_list(robot.lists));
     }
     return null;
   }
