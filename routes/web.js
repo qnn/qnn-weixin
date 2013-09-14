@@ -6,6 +6,10 @@ exports.index = function(req, res) {
   res.render('index');
 };
 
+exports.nearby_stores = function(req, res) {
+  res.render('nearby_stores');
+};
+
 // Note:
 // The 'lat' and 'lng' parameter should always be the user's latitude and longitude
 // Do not mess up this coordinates with the ones of any store.

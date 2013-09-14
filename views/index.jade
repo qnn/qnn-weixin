@@ -5,27 +5,24 @@ extends layout
 
 block content
   article.container(role='main')
-    .col-md-offset-3.col-md-6
+    .col-md-2
       .panel.panel-default
-        .panel-heading 寻找离我最近的全能销售网点
+        .panel-heading Build Status
         .panel-body
-          .row.form-group
-            .col-xs-6
-              input#coord-lat.text-right.form-control(type='text', value='22.849068', placeholder='十进制纬度')
-            .col-xs-6
-              input#coord-lng.text-left.form-control(type='text', value='113.216673', placeholder='十进制经度')
-          .row.form-group
-            .col-xs-6.text-right
-              button#get_my_coord.btn.btn-default(type='button') 我的坐标
-            .col-xs-6.text-left
-              button#list_nearby_stores.btn.btn-default(type='button') 列出网点
-    #results.col-md-offset-2.col-md-8.hidden
+          a(href="https://travis-ci.org/qnn/qnn-weixin")
+            img(src="https://travis-ci.org/qnn/qnn-weixin.png?branch=master")
+    .col-md-10
       .panel.panel-default
-        .panel-heading 离我最近的全能销售网点
-        table#stores_list.table.table-hover.table-striped
-          thead
-            tr
-              th #
-              th 名称/地址
-              th 距离/坐标
-          tbody
+        .panel-heading 自动获取坐标
+        .panel-body
+          .col-md-6
+            img.img-responsive(src="/images/jake_coord.gif")
+          .col-md-6
+            h4.loose
+              利用百度地图的一些公开的API和JS文件，编写根据地址寻找坐标的程序。
+              如果通过地址找不到坐标，就会逐渐缩短地址，直到有坐标为止。
+              如果地址不准确，通常也只能地位到店铺所在的镇。
+              通过这个程序省去了大部分人手寻找坐标的时间。
+              大部分JS可以直接用，但也参照了之前写的这个Shell程序：
+              a(href="https://github.com/caiguanhao/baidu-maps-coord-utils") baidu-maps-coord-utils
+              。

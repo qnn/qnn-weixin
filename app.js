@@ -41,6 +41,7 @@ var api    = require('./routes/api');
 
 // web:
 app.get('/'                    , web.index);
+app.get('/nearby_stores'       , web.nearby_stores);
 app.get('/stores/:store?'      , web.stores);
 app.get('/maps'                , web.maps);
 app.get('/lists/:list/:entry?' , web.lists);

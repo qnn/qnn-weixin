@@ -5,7 +5,7 @@ html
   head
     meta(charset='UTF-8')
     meta(name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
-    title= title + " - 销售网点管理工具"
+    title= title + " - 全能微信服务"
     link(rel='stylesheet', href='/vendor/stylesheets/bootstrap.min.css')
     link(rel='stylesheet', href='/vendor/stylesheets/bootstrap.theme.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
@@ -16,9 +16,14 @@ html
     nav.navbar.navbar-default(role='navigation')
       .container
           .navbar-header
-            a.navbar-brand(href='/') 销售网点管理工具
+            a.navbar-brand(href='/') 全能微信服务
           .collapse.navbar-collapse.navbar-ex1-collapse
             ul.nav.navbar-nav
               li(class=page=='stores'?'active':'')
                 a(href='/stores') 所有网点
+              li(class=page=='nearby_stores'?'active':'')
+                a(href='/nearby_stores') 我附近的店
+                li.ghbtns
+                  iframe(src="http://ghbtns.com/github-btn.html?user=qnn&repo=qnn-weixin&type=watch&size=large"
+              allowtransparency="true" frameborder="0" scrolling="0" width="77" height="30")
     block content
