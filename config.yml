@@ -42,6 +42,8 @@ robots:
       
       如果你无法获取坐标，也可以前往<a href="http://www.qnnsafe.com/network/">手机版官网</a>查询。
 
+
+# 菜单更改完后需要运行 jake menu:create 将更新提交到微信服务器
 menus:
   全能之家:
     全能官网: http://www.qnnsafe.com/
@@ -57,6 +59,16 @@ menus:
     全能资讯: http://www.qnnsafe.com/news/
 
 
+# [LIST名称]:
+#   require: // 引用其他 YAML 文件
+#   datakey: // 引用的 YAML 文件的子项
+#   link_base_url: // 链接前面部分
+#   image_base_url: // 图片地址前面部分
+#   items: // 列表项数组
+#     title: 标题
+#     image: 标题右边的图片，可不设
+#     links: 链接，如果不设则连入该项详细页
+#     words: 详细文字
 lists:
   LIST_FAQ:
     require: /data.yml
