@@ -1,0 +1,23 @@
+doctype 5
+html
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport' content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
+    title Details
+    link(rel='stylesheet' href='/stylesheets/weixin.css')
+  body
+    .msg-wrapper
+      .msg-container
+        - each item, index in list.items
+          a.msg-item(href=list.link_base_url + item.links)
+            - if (index == 0)
+              span.msg-big-img
+                img(src=list.image_base_url + item.image)
+                span.msg-big-img-text= item.words
+            - else if (item.image)
+              span.msg-text= item.words
+              span.msg-img
+                img(src=list.image_base_url + item.image)
+      .footer
+        &copy; 2013 
+        a(href='http://www.qnnsafe.com/') 全能官网

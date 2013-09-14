@@ -108,6 +108,9 @@ lists:
         image: kl.jpg
 
 
+# 图文列表过长时最后一项显示的文字
+list_item_last: 查看全部...
+
 # 最近店铺列表第一个大项的文字
 title_of_first_nearby_store: 打开地图查看各销售网点位置
 

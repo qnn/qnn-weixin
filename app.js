@@ -43,6 +43,7 @@ var api    = require('./routes/api');
 app.get('/'               , web.index);
 app.get('/stores/:store?' , web.stores);
 app.get('/maps'           , web.maps);
+app.get('/lists/:list'    , web.lists);
 
 // weixin:
 app.get('/weixin'         , weixin.get);

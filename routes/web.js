@@ -1,4 +1,6 @@
-var paths = require('../paths');
+require('js-yaml');
+var paths  = require('../paths');
+var config = require(paths.config);
 
 exports.index = function(req, res) {
   res.render('index');
@@ -20,7 +22,7 @@ var validate_coordinates = function(params, prefix) {
   valid[prefix + 'lat'] = params[prefix + 'lat'];
   valid[prefix + 'lng'] = params[prefix + 'lng'];
   return valid;
-}
+};
 
 exports.stores = function(req, res, next) {
   var store_name = req.params.store;
@@ -39,6 +41,17 @@ exports.stores = function(req, res, next) {
   } else {
     res.render('stores');
   }
+};
+
+exports.lists = function(req, res, next) {
+  var list = req.params.list.trim();
+  if (list) {
+    if (config.lists.hasOwnProperty(list)) {
+      res.render('list_details', { list: config.lists[list] });
+      return;
+    }
+  }
+  next();
 };
 
 // mobile:
