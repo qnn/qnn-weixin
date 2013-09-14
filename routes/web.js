@@ -44,8 +44,8 @@ exports.stores = function(req, res, next) {
 };
 
 exports.lists = function(req, res, next) {
-  var prepend_base_url = false;
-  var list = weixin.make_robot_list(req.params.list, req.params.entry, prepend_base_url);
+  var prepend_base_url = false, limit = false;
+  var list = weixin.make_robot_list(req.params.list, req.params.entry, limit, prepend_base_url);
   var base = '/lists/' + encodeURI(req.params.list);
   if (list) {
     res.render('list_details', { list: list, base: base });
