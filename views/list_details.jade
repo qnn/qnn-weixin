@@ -13,9 +13,9 @@ html
             - if (index == 0)
               span.msg-big-img
                 img(src=list.image_base_url + item.image)
-                span.msg-big-img-text= item.words
+                span.msg-big-img-text= item.title
             - else if (item.image)
-              span.msg-text= item.words
+              span.msg-text= item.title
               span.msg-img
                 img(src=list.image_base_url + item.image)
       .footer
