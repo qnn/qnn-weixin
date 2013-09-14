@@ -9,15 +9,25 @@ html
     .msg-wrapper
       .msg-container
         - each item, index in list
-          a.msg-item(href=item[3])
-            - if (index == 0)
+          - if (item[1])
+            a.msg-item.blue_link(href=base)
+              span.msg-text-only 返回
+            .msg-item
               span.msg-big-img
                 img(src=item[2])
                 span.msg-big-img-text= item[0]
-            - else if (item[2])
-              span.msg-text= item[0]
-              span.msg-img
-                img(src=item[2])
+            .msg-item
+              span.msg-text-only !{item[1].replace(/\n/g, '<br>')}
+          - else
+            a.msg-item(href=item[3])
+              - if (index == 0)
+                span.msg-big-img
+                  img(src=item[2])
+                  span.msg-big-img-text= item[0]
+              - else if (item[2])
+                span.msg-text= item[0]
+                span.msg-img
+                  img(src=item[2])
       .footer
         &copy; 2013 
         a(href='http://www.qnnsafe.com/') 全能官网
