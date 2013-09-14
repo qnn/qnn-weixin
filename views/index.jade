@@ -5,24 +5,95 @@ extends layout
 
 block content
   article.container(role='main')
-    .col-md-2
-      .panel.panel-default
-        .panel-heading Build Status
-        .panel-body
-          a(href="https://travis-ci.org/qnn/qnn-weixin")
-            img(src="https://travis-ci.org/qnn/qnn-weixin.png?branch=master")
-    .col-md-10
-      .panel.panel-default
-        .panel-heading 自动获取坐标
-        .panel-body
-          .col-md-6
-            img.img-responsive(src="/images/jake_coord.gif")
-          .col-md-6
-            h4.loose
-              利用百度地图的一些公开的API和JS文件，编写根据地址寻找坐标的程序。
-              如果通过地址找不到坐标，就会逐渐缩短地址，直到有坐标为止。
-              如果地址不准确，通常也只能地位到店铺所在的镇。
-              通过这个程序省去了大部分人手寻找坐标的时间。
-              大部分JS可以直接用，但也参照了之前写的这个Shell程序：
-              a(href="https://github.com/caiguanhao/baidu-maps-coord-utils") baidu-maps-coord-utils
-              。
+    .panel.panel-default
+      .panel-heading 机器人
+      .panel-body
+        .col-md-6
+          pre.
+            robots:
+              - regex: ["^(gnu|linux|gnu[\\/+\\-\\s&.,:]?linux)$", "i"]
+                tests: ['GNU','LiNux','GnU/LiNuX']
+                sound: ['/sounds/gnulinux.mp3', '/sounds/gnulinux.mp3', 'What Is GNU/Linux?', 'Richard Stallman']
+
+              - exact: help
+                words: |
+                  This is an open source app.
+
+              - click: MENU_PRODUCTS
+                lists: LIST_PRODUCTS
+
+              - click: ['MENU_BUYERS_GUIDE', 'MENU_CLEAN']
+                words: 抱歉，资料添加中，请稍后查阅...
+        .col-md-6
+          h4.loose
+            用户每个动作都触发了微信服务器向这个应用程序发出信息，而在 robots 定义了如何为一些规则的请求作出反应。
+            利用正则表达式（regex）可以快速模糊匹配词语。
+            微信规定了三种返回信息的类型：文字（words）、语音（sound）、图文列表（lists）。
+            | words 可直接填写简单的文字和一些HTML标签。
+            | sound 必须是MP3格式，如果是数组，各元素分别代表：低品质和高品质语音地址、标题、描述。
+            | lists 需要填入 lists 下的子项名称。
+    .panel.panel-default
+      .panel-heading 菜单
+      .panel-body
+        .col-md-6
+          pre.
+            menus:
+              全能之家:
+                全能官网: http://www.qnnsafe.com/
+                招商加盟: http://www.qnnsafe.com.cn/
+                全能产品: MENU_PRODUCTS
+              自助服务:
+                导购精灵: MENU_BUYERS_GUIDE
+                网点查询: MENU_FIND_STORE
+                天猫旗舰: http://qnn.tmall.com/
+                常见问题: MENU_FAQ
+                清洁保养: MENU_CLEAN
+              新闻中心: http://www.qnnsafe.com/news/
+        .col-md-6
+          h4.loose
+            菜单分二级，一级最多三个，二级可有可无，最好不超过四个，五个或以上会很长。
+            菜单动作分两种，一是直接跳入网页，所以直接接上 URL 就可以了。
+            另外一种是，当用户点击菜单项后，微信发出一个查询，服务器按照发出的“代号”回应文字、列表等信息。
+            代号用一些英文字组成，如果不在 robots 定义，服务器不作出回应。
+    .panel.panel-default
+      .panel-heading 图文列表
+      .panel-body
+        .col-md-6
+          pre.
+            lists:
+              LIST_FAQ:
+                require: /data.yml
+                datakey: faqs
+              LIST_PRODUCTS:
+                link_base_url: http://www.qnnsafe.com
+                image_base_url: http://www.qnnsafe.com/images/weixin/
+                items:
+                  - title: 梦想全能实现
+                    links: /
+                    image: quanjiafu.jpg
+
+                  - title: 【全能风生水起】 中国首款风水保险柜
+                    links: /bw-6960.html
+                    image: bw.jpg
+        .col-md-6
+          h4.loose
+            如果列表内容太多，可以利用 require 引用其他 YAML 文件。
+            | datakey 是 require 引用的文件的子项。
+            | link_base_url 是各项链接的共同部分，而 image_base_url 则是图片地址的共同部分。
+            如果链接是 http 开头就不会加上共同部分。
+            | items 定义各项，title 是标题，image 是标题右边的图片，links 是链接，words 是详细内容。
+            详细内容要点击进入列表项目详细页才可见。如果无定义 links ，links 就是项目详细页的网址。
+    .panel.panel-default
+      .panel-heading 自动获取坐标
+      .panel-body
+        .col-md-6
+          img.img-responsive.img-center(src="/images/jake_coord.gif")
+        .col-md-6
+          h4.loose
+            利用百度地图的一些公开的API和JS文件，编写根据地址寻找坐标的程序。
+            如果通过地址找不到坐标，就会逐渐缩短地址，直到有坐标为止。
+            如果地址不准确，通常也只能地位到店铺所在的镇。
+            通过这个程序省去了大部分人手寻找坐标的时间。
+            大部分JS可以直接用，但也参照了之前写的这个Shell程序：
+            a(href="https://github.com/caiguanhao/baidu-maps-coord-utils") baidu-maps-coord-utils
+            。
