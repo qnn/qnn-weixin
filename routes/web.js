@@ -48,10 +48,10 @@ exports.stores = function(req, res, next) {
 };
 
 exports.lists = function(req, res, next) {
-  var prepend_base_url = false, limit = false;
+  var prepend_base_url = false, limit = false, base = null;
   var list = weixin.make_robot_list(req.params.list, req.params.entry, limit, prepend_base_url);
   if (list) {
-    var base = '/lists/' + encodeURI(req.params.list);
+    if (req.params.entry) base = '/lists/' + encodeURI(req.params.list);
     var format_functions = {
       message: function(message) {
         return weixin.format_message(message).replace(/\r?\n/g, '<br>');

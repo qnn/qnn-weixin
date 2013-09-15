@@ -10,14 +10,24 @@ html
       .msg-container
         - each item, index in list
           - if (item[1])
-            a.msg-item.blue_link(href=base)
-              span.msg-text-only 返回
-            .msg-item
-              span.msg-big-img
-                img(src=item[2])
-                span.msg-big-img-text !{format.message(item[0])}
-            .msg-item
-              span.msg-text-only !{format.message(item[1])}
+            - if (base)
+              a.msg-item.blue_link(href=base)
+                span.msg-text-only 返回
+              .msg-item
+                span.msg-big-img
+                  img(src=item[2])
+                  span.msg-big-img-text !{format.message(item[0])}
+              .msg-item
+                span.msg-text-only !{format.message(item[1])}
+            - else
+              a.msg-item(href=item[3])
+                span.msg-big-img
+                  img(src=item[2])
+                  span.msg-big-img-text !{format.message(item[0])}
+              a.msg-item(href=item[3])
+                span.msg-text-only !{format.message(item[1])}
+              a.msg-item(href=item[3])
+                span.msg-text-only 查看全文...
           - else
             a.msg-item(href=item[3])
               - if (index == 0)
