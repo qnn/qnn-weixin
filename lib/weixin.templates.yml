@@ -21,7 +21,7 @@ list_response_template: |
 
 list_item_template: |
   <item>
-  <Title><![CDATA[%s]]></Title> 
+  <Title><![CDATA[%s]]></Title>
   <Description><![CDATA[%s]]></Description>
   <PicUrl><![CDATA[%s]]></PicUrl>
   <Url><![CDATA[%s]]></Url>
