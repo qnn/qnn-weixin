@@ -50,9 +50,14 @@ exports.stores = function(req, res, next) {
 exports.lists = function(req, res, next) {
   var prepend_base_url = false, limit = false;
   var list = weixin.make_robot_list(req.params.list, req.params.entry, limit, prepend_base_url);
-  var base = '/lists/' + encodeURI(req.params.list);
   if (list) {
-    res.render('list_details', { list: list, base: base });
+    var base = '/lists/' + encodeURI(req.params.list);
+    var format_functions = {
+      message: function(message) {
+        return weixin.format_message(message).replace(/\r?\n/g, '<br>');
+      }
+    };
+    res.render('list_details', { list: list, base: base, format: format_functions });
   } else {
     next();
   }
