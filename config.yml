@@ -74,12 +74,15 @@ menus:
 #     words: 详细文字
 lists:
   LIST_FAQ:
+    comment: 常见问题列表
     require: /data.yml
     datakey: faqs
   LIST_PRODUCTS:
+    comment: 全能产品列表
     require: /data.yml
     datakey: products
   LIST_CLEAN:
+    comment: 清洁保养文章列表
     require: /data.yml
     datakey: clean
 

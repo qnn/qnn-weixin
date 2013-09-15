@@ -7,4 +7,4 @@ block content
   .msg-container
     - each list, index in lists
       a.msg-item.blue_link(href="/lists/"+index)
-        span.msg-text-only= index
+        span.msg-text-only= list.comment || index
