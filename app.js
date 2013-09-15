@@ -40,18 +40,18 @@ var weixin = require('./routes/weixin');
 var api    = require('./routes/api');
 
 // web:
-app.get('/'                    , web.index);
-app.get('/nearby_stores'       , web.nearby_stores);
-app.get('/stores/:store?'      , web.stores);
-app.get('/maps'                , web.maps);
-app.get('/lists/:list/:entry?' , web.lists);
+app.get('/'                     , web.index);
+app.get('/nearby_stores'        , web.nearby_stores);
+app.get('/stores/:store?'       , web.stores);
+app.get('/maps'                 , web.maps);
+app.get('/lists/:list?/:entry?' , web.lists);
 
 // weixin:
-app.get('/weixin'              , weixin.get);
-app.post('/weixin'             , weixin.post);
+app.get('/weixin'               , weixin.get);
+app.post('/weixin'              , weixin.post);
 
 // api:
-app.get('/api/stores'          , api.stores);
+app.get('/api/stores'           , api.stores);
 
 // if nothing matches, return 404
 app.use(function(req, res){

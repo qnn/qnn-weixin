@@ -1,6 +1,7 @@
 require('js-yaml');
 var paths  = require('../paths');
 var weixin = require(paths.lib.weixin);
+var config = require(paths.config);
 
 exports.index = function(req, res) {
   res.render('index');
@@ -50,6 +51,7 @@ exports.stores = function(req, res, next) {
 exports.lists = function(req, res, next) {
   var prepend_base_url = false, limit = false, base = null;
   var list = weixin.make_robot_list(req.params.list, req.params.entry, limit, prepend_base_url);
+
   if (list) {
     if (req.params.entry) base = '/lists/' + encodeURI(req.params.list);
     var format_functions = {
@@ -59,7 +61,11 @@ exports.lists = function(req, res, next) {
     };
     res.render('list_details', { list: list, base: base, format: format_functions });
   } else {
-    next();
+    if (req.params.list) {
+      next();
+    } else {
+      res.render('lists', { lists: config.lists });
+    }
   }
 };
 
