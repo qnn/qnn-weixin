@@ -1,3 +1,55 @@
+products:
+  link_base_url: http://www.qnnsafe.com
+  image_base_url: http://www.qnnsafe.com/images/weixin/
+  items:
+  - title: 梦想全能实现
+    links: /
+    image: quanjiafu.jpg
+
+  - title: 【全能风生水起】 中国首款风水保险柜
+    links: /bw-6960.html
+    image: bw.jpg
+
+  - title: 【全能指点江山】 指点江山，运筹帷幄
+    links: /zf-4542.html
+    image: zf.jpg
+
+  - title: 【全能钢将军】 实用为王，储物自如
+    links: /fg-2940br.html
+    image: fg.jpg
+
+  - title: 【全能金库】 防盗技术，全球领先
+    links: /b-4538.html
+    image: b.jpg
+
+  - title: 【全能新皇冠】 安全典范，生活品味
+    links: /hg-2740.html
+    image: hg.jpg
+
+  - title: 【全能铁管家】 3C认证，品质保证
+    links: /sjb-1630br.html
+    image: sjb.jpg
+
+  - title: 【全能文件柜】 精明老板，明智之选
+    links: /bmg-7545ab.html
+    image: bmg.jpg
+
+  - title: 【全能高尔夫】 精英格调，赏心悦目
+    links: /glf-3340.html
+    image: glf.jpg
+
+  - title: 【全能铁金刚】 睿智沉稳，精英气息
+    links: /tgg-2040br.html
+    image: tgg.jpg
+
+  - title: 【全能钢铁侠】 装甲精良，豪侠气概
+    links: /gtx-3345.html
+    image: bw.jpg
+
+  - title: 【全能可拉】 时尚安全，和谐统一
+    links: /kl-4045.html
+    image: kl.jpg
+
 faqs:
   image_base_url: http://www.qnnsafe.com/images/weixin/
   items:
