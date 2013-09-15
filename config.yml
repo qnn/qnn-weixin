@@ -33,7 +33,10 @@ robots:
   - click: MENU_FAQ
     lists: LIST_FAQ
 
-  - click: ['MENU_BUYERS_GUIDE', 'MENU_CLEAN']
+  - click: MENU_CLEAN
+    lists: LIST_CLEAN
+
+  - click: ['MENU_BUYERS_GUIDE']
     words: 抱歉，资料添加中，请稍后查阅...
 
   - click: MENU_FIND_STORE
@@ -76,6 +79,9 @@ lists:
   LIST_PRODUCTS:
     require: /data.yml
     datakey: products
+  LIST_CLEAN:
+    require: /data.yml
+    datakey: clean
 
 
 # 图文列表过长时最后一项显示的文字
