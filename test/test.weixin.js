@@ -109,7 +109,7 @@ describe('find nearby stores with position/coordinates functionality', function(
       assert.strictEqual(result.xml.Articles[0].item.length, count, 'wrong number of stores?');
       assert((result.xml.Articles[0].item[0].Title instanceof Array), 'article item title is not an array?');
       assert.strictEqual(result.xml.Articles[0].item[0].Title.join(''), config.title_of_first_nearby_store, 'wrong calculation?');
-      assert.strictEqual(result.xml.Articles[0].item[1].Title.join('').split('\n')[0], config.test.nearby_store_name, 'wrong calculation?');
+      assert.strictEqual(result.xml.Articles[0].item[1].Title.join('').split(/\r?\n/)[0], config.test.nearby_store_name, 'wrong calculation?');
       done();
     });
   }
