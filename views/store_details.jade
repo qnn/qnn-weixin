@@ -1,59 +1,53 @@
-doctype 5
-html
-  head
-    meta(charset='UTF-8')
-    meta(name='viewport' content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
-    title Details
-    link(rel='stylesheet' href='/stylesheets/weixin.css')
-  body
-    .msg-wrapper
-      - each store in stores
-        .msg-container
-          .msg-item
-            span.msg-text-only
-              | 网点名称：
-              br
-              = store[0]
-          .msg-item
-            span.msg-text-only
-              | 网点地址：
-              br
-              = store[1] + (store[1] != store[2] ? store[2] : '') + store[3] + store[4]
-          .msg-item
-            span.msg-text-only
-              | 网点坐标：
-              br
-              = store[9] + ', ' + store[10]
-          - if (lat && lng)
-            .msg-item
-              span.msg-text-only
-                | 我的坐标：
-                br
-                = lat + ', ' + lng
-            a.msg-item.blue_link(href='/maps?lat='+lat+'&lng='+lng+'&tolat='+store[9]+'&tolng='+store[10])
-              span.msg-text-only
-                | 查找到此网点的路线...
-          - if (store[5])
-            .msg-item
-              span.msg-text-only
-                | 联系电话：
-                br
-                = store[5]
-          - if (store[6])
-            .msg-item
-              span.msg-text-only
-                | 联系人：
-                br
-                = store[6]
-          - if (store[7])
-            .msg-item
-              span.msg-text-only
-                | 网址：
-                br
-                a(href='http://www.'+store[7] target='_blank')= 'www.'+store[7]
-          a.msg-item.blue_link(href='http://www.qnnsafe.com/network/')
-            span.msg-text-only
-              | 查看所有网点...
-      .footer
-        &copy; 2013 
-        a(href='http://www.qnnsafe.com/') 全能官网
+block variables
+  title = "网点详细"
+
+extends layout_weixin
+
+block content
+  - each store in stores
+    .msg-container
+      .msg-item
+        span.msg-text-only
+          | 网点名称：
+          br
+          = store[0]
+      .msg-item
+        span.msg-text-only
+          | 网点地址：
+          br
+          = store[1] + (store[1] != store[2] ? store[2] : '') + store[3] + store[4]
+      .msg-item
+        span.msg-text-only
+          | 网点坐标：
+          br
+          = store[9] + ', ' + store[10]
+      - if (lat && lng)
+        .msg-item
+          span.msg-text-only
+            | 我的坐标：
+            br
+            = lat + ', ' + lng
+        a.msg-item.blue_link(href='/maps?lat='+lat+'&lng='+lng+'&tolat='+store[9]+'&tolng='+store[10])
+          span.msg-text-only
+            | 查找到此网点的路线...
+      - if (store[5])
+        .msg-item
+          span.msg-text-only
+            | 联系电话：
+            br
+            = store[5]
+      - if (store[6])
+        .msg-item
+          span.msg-text-only
+            | 联系人：
+            br
+            = store[6]
+      - if (store[7])
+        .msg-item
+          span.msg-text-only
+            | 网址：
+            br
+            a(href='http://www.'+store[7] target='_blank')= 'www.'+store[7]
+      a.msg-item.blue_link(href='http://www.qnnsafe.com/network/')
+        span.msg-text-only
+          | 查看所有网点...

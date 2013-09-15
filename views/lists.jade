@@ -1,13 +1,10 @@
-doctype 5
-html
-  head
-    meta(charset='UTF-8')
-    meta(name='viewport' content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
-    title Details
-    link(rel='stylesheet' href='/stylesheets/weixin.css')
-  body
-    .msg-wrapper
-      .msg-container
-        - each list, index in lists
-          a.msg-item.blue_link(href="/lists/"+index)
-            span.msg-text-only= index
+block variables
+  title = "列表"
+
+extends layout_weixin
+
+block content
+  .msg-container
+    - each list, index in lists
+      a.msg-item.blue_link(href="/lists/"+index)
+        span.msg-text-only= index
