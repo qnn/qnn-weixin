@@ -8,7 +8,7 @@ block content
     - each item, index in list
       - if (item[1])
         - if (base)
-          a.msg-item.blue_link(href=base)
+          a.back.msg-item.blue_link(href=base)
             span.msg-text-only 返回
           .msg-item
             span.msg-big-img
@@ -35,3 +35,5 @@ block content
             span.msg-text !{format.message(item[0])}
             span.msg-img
               img(src=item[2])
+  script.
+    if(!document.referrer){var elements=document.getElementsByClassName('back');for(var i in elements){elements[i].parentNode.removeChild(elements[i]);}}
