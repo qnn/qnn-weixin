@@ -72,6 +72,52 @@ To see more jake tasks, run ``jake``. To test this app, run ``npm test``.
     jake token          # create or update token file  
     jake coord          # find coordinates  
 
+
+Menu
+----
+
+The Service Account has the privileges to customize Weixin's menu. You'll need a valid ``appid`` and an ``appsecret`` in ``token.json``.
+
+Run ``jake menu:show`` to see if local menu is the same as the remote one.
+
+    Success: Got access token.
+    >>> Local Menu <<<
+    menus:
+      全能之家:
+        全能官网: http://www.qnnsafe.com/
+        招商加盟: http://www.qnnsafe.com.cn/
+        全能产品: MENU_PRODUCTS
+      自助服务:
+        导购精灵: MENU_BUYERS_GUIDE
+        网点查询: MENU_FIND_STORE
+        天猫旗舰: http://qnn.tmall.com/
+        常见问题: MENU_FAQ
+        清洁保养: MENU_CLEAN
+      活动专区:
+        全能资讯: http://www.qnnsafe.com/news/
+    >>> Remote Menu <<<
+    menus:
+      全能之家:
+        全能官网: http://www.qnnsafe.com/
+        招商加盟: http://www.qnnsafe.com.cn/
+        全能产品: MENU_PRODUCTS
+      自助服务:
+        导购精灵: MENU_BUYERS_GUIDE
+        网点查询: MENU_FIND_STORE
+        天猫旗舰: http://qnn.tmall.com/
+        常见问题: MENU_FAQ
+        清洁保养: MENU_CLEAN
+      活动专区:
+        全能资讯: http://www.qnnsafe.com/news/
+    Nothing to do! Local menu is the same as the remote one.
+
+Run ``jake menu:create`` to update remote menu with the local one described in ``config.yml``.
+Run ``jake menu:destroy`` to remove the remote menu.
+No need to remove the menu before updating it.
+
+For most of subscribers/followers, the menu will be updated in 24 hours.
+To see the latest menu instantly, you'll need to resubscribe the account.
+
 Global Modules
 --------------
 
