@@ -5,6 +5,18 @@ A Weixin (WeChat) management tool for QNN.
 
 [![Build Status](https://travis-ci.org/qnn/qnn-weixin.png?branch=master)](https://travis-ci.org/qnn/qnn-weixin)
 
+Scan QRCode in Weixin to follow QNN:
+
+[![Weixin QRCode](https://raw.github.com/qnn/qnn-weixin/master/public/images/weixin_qrcode.png)](http://weixin.qq.com/r/rnUvN2PEYj4drSdU9yC8)
+
+Features
+--------
+
+✔ Text, audio and list response to subscription, menu clicks, or text request.  
+✔ Menu manipulation.  
+✔ Find stores near you (via coordinates).  
+✔ Automatically find coordinates using Baidu Maps.
+
 How to use
 ----------
 
@@ -40,22 +52,31 @@ Install dependencies for the first time:
 
     npm install
 
-Start Node in Production Mode with Forever:
+Start app in production mode:
 
     jake start
 
-In Development Mode:
+Start app locally in development mode:
 
-    nodemon app.js
+    npm start
 
-To see more jake tasks, run ``jake``.
+To see more jake tasks, run ``jake``. To test this app, run ``npm test``.
+
+    jake start          # forever start  
+    jake restart        # forever restart  
+    jake stop           # forever stop  
+    jake list           # forever list  
+    jake menu:show      # show current menu  
+    jake menu:create    # create/update menu  
+    jake menu:destroy   # destroy current menu  
+    jake token          # create or update token file  
+    jake coord          # find coordinates  
 
 Global Modules
 --------------
 
 * jake (``npm install -g jake``)
 * forever
-* nodemon (used in development mode)
 
 Find coordinates
 ----------------
