@@ -44,11 +44,11 @@ $(function(){
         map = new BMap.Map(mapdiv[0]);
         map.addControl(new BMap.NavigationControl());
         map.enableScrollWheelZoom();
-        var icon_green = new BMap.Icon('/images/marker_green.png', new BMap.Size(20, 32), {
+        var icon_red = new BMap.Icon('/images/marker_red.png', new BMap.Size(20, 32), {
           anchor: new BMap.Size(10, 30),
           infoWindowAnchor: new BMap.Size(10, 0)
         });
-        marker = new BMap.Marker(point, { icon: icon_green });
+        marker = new BMap.Marker(point, { icon: icon_red });
         marker.addEventListener('dragging', function(info){
           $(info.target.map.xa).parents('tr').prev().find('a.coord').text(info.point.lat + ', ' + info.point.lng);
         });
