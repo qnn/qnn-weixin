@@ -6,8 +6,8 @@ $(function(){
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position){
         resume_button();
-        $('#coord-lat').val(position.coords.latitude);
-        $('#coord-lng').val(position.coords.longitude);
+        $('#coord-lat').val(position.coords.latitude.toFixed(6));
+        $('#coord-lng').val(position.coords.longitude.toFixed(6));
       }, function(error){
         resume_button();
         switch (error.code) {
@@ -57,4 +57,36 @@ $(function(){
     validate_coordinates();
   });
   validate_coordinates();
+  $('#show_maps').click(function(e){
+    e.preventDefault();
+    if ($('#map').css('display') === 'none') {
+      $('#show_maps').text($('#show_maps').data('hide'));
+      $('#map').removeClass('hide');
+      if (!$('#map').hasClass('map_initialized')) {
+        $('#map').addClass('map_initialized');
+        var map = new BMap.Map("map");
+        map.addControl(new BMap.NavigationControl());
+        map.enableScrollWheelZoom();
+        var icon_green = new BMap.Icon('/images/marker_green.png', new BMap.Size(20, 32), {
+          anchor: new BMap.Size(10, 30),
+          infoWindowAnchor: new BMap.Size(10, 0)
+        });
+        var point = new BMap.Point($('#coord-lng').val(), $('#coord-lat').val());
+        var marker = new BMap.Marker(point, { icon: icon_green });
+        marker.addEventListener('dragging', function(info){
+          $('#coord-lat').val(info.point.lat);
+          $('#coord-lng').val(info.point.lng);
+        });
+        marker.addEventListener('dragend', function(info){
+          $('#list_nearby_stores').trigger('click');
+        });
+        marker.enableDragging();
+        map.addOverlay(marker);
+        map.centerAndZoom(point, 11);
+      }
+    } else {
+      $('#show_maps').text($('#show_maps').data('show'));
+      $('#map').addClass('hide');
+    }
+  });
 });

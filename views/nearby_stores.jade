@@ -6,10 +6,18 @@ extends layout
 
 block content
   article.container(role='main')
-    .col-md-offset-3.col-md-6
+    .col-md-offset-2.col-md-8
       .panel.panel-default
-        .panel-heading 寻找离我最近的全能销售网点
+        .panel-heading
+          .pull-left 寻找离我最近的全能销售网点
+          .pull-right
+            a(href='#', id='show_maps', data-show='显示地图▼', data-hide='隐藏地图▲') 显示地图▼
+          .clearfix
         .panel-body
+          .row
+            .col-xs-12
+              script(src='http://api.map.baidu.com/api?v=2.0&ak=D4b3d7bef9a51f3d40431f4aee37e6bf')
+              #map.hide(style='margin: 0 0 15px; height: 300px;')
           .row.form-group
             .col-xs-6
               input#coord-lat.text-right.form-control(type='text', value='22.849068', placeholder='十进制纬度')
