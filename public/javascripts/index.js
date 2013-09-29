@@ -29,6 +29,7 @@ $(function(){
       alert('你的浏览器太旧了，不支持获取坐标，请用最新版浏览器。');
     }
   });
+  var map;
   var list_nearby_stores_text = $('#list_nearby_stores').text();
   $('#list_nearby_stores').on('click', function(){
     $('#list_nearby_stores').text('正在列出...').prop('disabled', true);
@@ -37,10 +38,26 @@ $(function(){
     $.getJSON('/api/stores', { lat: lat, lng: lng }, function(data){
       resume_button();
       $('#stores_list tbody').empty();
+      if (map) {
+        var overlays = map.getOverlays();
+        for (var i = 2; i < overlays.length; i++) {
+          map.removeOverlay(overlays[i]);
+        }
+      }
       $.each(data.stores, function(a, b){
         $('#stores_list tbody').append('<tr><td>' + (a + 1) + '</td><td>' +
           b[0] + '<br><small>' + b[4] + '</small></td><td>' + b[11].toFixed(3) + ' km' +
           '<br><small>' + b[9].toFixed(6) + ', ' + b[10].toFixed(6) + '</small></td></tr>');
+        if (map) {
+          var icon_red = new BMap.Icon('/images/marker_red_numeric.png', new BMap.Size(20, 32), {
+            imageOffset: new BMap.Size(0, -32 * (a + 1)),
+            anchor: new BMap.Size(10, 30),
+            infoWindowAnchor: new BMap.Size(10, 0)
+          });
+          var point = new BMap.Point(b[10].toFixed(6), b[9].toFixed(6));
+          var marker = new BMap.Marker(point, { icon: icon_red });
+          map.addOverlay(marker);
+        }
       });
       $('#results').removeClass('hidden');
     });
@@ -64,7 +81,7 @@ $(function(){
       $('#map').removeClass('hide');
       if (!$('#map').hasClass('map_initialized')) {
         $('#map').addClass('map_initialized');
-        var map = new BMap.Map("map");
+        map = new BMap.Map("map");
         map.addControl(new BMap.NavigationControl());
         map.enableScrollWheelZoom();
         var icon_green = new BMap.Icon('/images/marker_green.png', new BMap.Size(20, 32), {
@@ -81,6 +98,7 @@ $(function(){
           $('#list_nearby_stores').trigger('click');
         });
         marker.enableDragging();
+        marker.setZIndex(9999);
         map.addOverlay(marker);
         map.centerAndZoom(point, 11);
       }
