@@ -5,6 +5,7 @@
   "description": "A Weixin (WeChat) management tool for QNN.",
   "author": "caiguanhao <caiguanhao@gmail.com>",
   "license": "The BSD 3-Clause License",
+  "main": "app.js",
   "scripts": {
     "start": "node_modules/.bin/nodemon app.js",
     "test": "node_modules/.bin/mocha"
@@ -23,6 +24,8 @@
   "devDependencies": {
     "supertest": "*",
     "mocha": "*",
-    "nodemon": "*"
+    "nodemon": "*",
+    "grunt": "~0.4.2",
+    "async": "~0.2.9"
   }
 }

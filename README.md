@@ -1,11 +1,11 @@
-QNN-Weixin
+QNN-Weixin [![Build Status](https://travis-ci.org/qnn/qnn-weixin.png?branch=master)](https://travis-ci.org/qnn/qnn-weixin)
 ==========
 
-A Weixin (WeChat) management tool for QNN.
-
-[![Build Status](https://travis-ci.org/qnn/qnn-weixin.png?branch=master)](https://travis-ci.org/qnn/qnn-weixin)
-
-Scan QRCode in Weixin to follow QNN:
+A Weixin (WeChat) management tool for QNN.  
+This Weixin app is designed for QNN and may not best suit your project.  
+It is recommened you copy some useful code and write your own Weixin app.  
+The code may be updated to use newer software, but new features are not planned.  
+Scan the following QRCode in Weixin to follow QNN:
 
 [![Weixin QRCode](https://raw.github.com/qnn/qnn-weixin/master/public/images/weixin_qrcode.png)](http://weixin.qq.com/r/rnUvN2PEYj4drSdU9yC8)
 
@@ -48,37 +48,48 @@ Nginx configurations:
       }
     }
 
-Install dependencies for the first time:
+Install Grunt and pm2 for the first time:
+
+    npm -g i grunt-cli pm2
+
+Install dependencies:
 
     npm install
 
 Start app in production mode:
 
-    jake start
+    grunt start
 
-Start app locally in development mode:
+Or you can start app locally in development mode:
 
     npm start
 
-To see more jake tasks, run ``jake``. To test this app, run ``npm test``.
+To see more grunt tasks, run ``grunt --help``. To test this app, run ``npm test``.
 
-    jake start          # forever start  
-    jake restart        # forever restart  
-    jake stop           # forever stop  
-    jake list           # forever list  
-    jake menu:show      # show current menu  
-    jake menu:create    # create/update menu  
-    jake menu:destroy   # destroy current menu  
-    jake token          # create or update token file  
-    jake coord          # find coordinates  
-
+    Available tasks
+            status  Check status of the app.
+           details  Check JSON status of the app.
+        start_only  Start/restart the app.
+         stop_only  Stop the app.
+         kill_only  Kill the app.
+             start  Alias for "status", "start_only", "status" tasks.
+           restart  Alias for "start" task.
+              stop  Alias for "stop_only", "status" tasks.
+              kill  Alias for "kill_only", "status" tasks.
+         menu:show  Show current Weixin menu.
+       menu:update  Update current Weixin menu.
+      menu:destroy  Destroy current Weixin menu.
+             token  Update token file.
+             coord  Find coordinates.
 
 Menu
 ----
 
-The Service Account has the privileges to customize Weixin's menu. You'll need a valid ``appid`` and an ``appsecret`` in ``token.json``.
+If your Weixin account is type of Service Account, it has the privileges to customize Weixin's menu.  
+You'll need a valid appid and appsecret in token.json.  
+You can enter these secret tokens by running ``grunt token``.
 
-Run ``jake menu:show`` to see if local menu is the same as the remote one.
+Run ``grunt menu:show`` to see if local menu is the same as the remote one.
 
     Success: Got access token.
     >>> Local Menu <<<
@@ -111,23 +122,17 @@ Run ``jake menu:show`` to see if local menu is the same as the remote one.
         全能资讯: http://www.qnnsafe.com/news/
     Nothing to do! Local menu is the same as the remote one.
 
-Run ``jake menu:create`` to update remote menu with the local one described in ``config.yml``.
-Run ``jake menu:destroy`` to remove the remote menu.
+Run ``grunt menu:update`` to update remote menu with the local one described in ``config.yml``.  
+Run ``grunt menu:destroy`` to remove the remote menu.  
 No need to remove the menu before updating it.
 
 For most of subscribers/followers, the menu will be updated in 24 hours.
-To see the latest menu instantly, you'll need to resubscribe the account.
-
-Global Modules
---------------
-
-* jake (``npm install -g jake``)
-* forever
+So if you want to see the latest menu instantly, according to Weixin's documentation, you'll need to resubscribe the account.
 
 Find coordinates
 ----------------
 
-Simply run ``jake coord`` to automatically query Baidu Maps for coordinates to those addresses without coordinates in ``stores.json`` and save them.
+Simply run ``grunt coord`` to automatically query Baidu Maps for coordinates to those addresses without coordinates in ``stores.json`` and save them.
 
 Developer
 ---------
