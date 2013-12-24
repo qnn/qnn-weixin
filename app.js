@@ -4,35 +4,33 @@ var path    = require('path');
 var fs      = require('fs');
 var app     = express();
 
-// all environments
-app.set('port',        process.env.PORT || 3000);
-app.set('views',       __dirname + '/views');
-app.set('view engine', 'jade');
-app.set('json spaces', 0);
-
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(app.router);
-app.use(require('stylus').middleware(__dirname + '/public'));
-app.use(express.static(path.join(__dirname, 'public')));
-
-// development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
-}
-
 var SOCKET_FILE = __dirname + '/tmp/sockets/node.socket';
 
 if (fs.existsSync(SOCKET_FILE)) {
   fs.unlinkSync(SOCKET_FILE);
 }
 
-// production only
-if ('production' == app.get('env')) {
+app.configure(function(){
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'jade');
+  app.set('json spaces', 0);
+  app.use(express.favicon());
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(app.router);
+  app.use(require('stylus').middleware(__dirname + '/public'));
+  app.use(express.static(path.join(__dirname, 'public')));
+});
+
+app.configure('development', function(){
+  app.set('port', process.env.PORT || 3000);
+  app.use(express.logger('dev'));
+  app.use(express.errorHandler());
+});
+
+app.configure('production', function(){
   app.set('port', SOCKET_FILE);
-}
+});
 
 // routes:
 var web    = require('./routes/web');

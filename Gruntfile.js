@@ -55,6 +55,7 @@ module.exports = function(grunt) {
     var async = require('async');
     pm2status(function(status) {
       if (status.length === 0) {
+        process.env['NODE_ENV'] = 'production';
         exec('pm2 start ' + pkg.main, function(error, stdout, stderr) {
           if (error) {
             grunt.log.error(error);
@@ -67,6 +68,7 @@ module.exports = function(grunt) {
         });
       } else {
         async.each(status, function(s, callback) {
+          process.env['NODE_ENV'] = 'production';
           exec('pm2 restart ' + s.pm_id, function(error, stdout, stderr) {
             callback(error);
           });
