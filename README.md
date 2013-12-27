@@ -50,7 +50,7 @@ Nginx configurations:
 
 Install Grunt and pm2 for the first time:
 
-    npm -g i grunt-cli pm2
+    npm -g i grunt-cli jake forever
 
 Install dependencies:
 
@@ -58,29 +58,31 @@ Install dependencies:
 
 Start app in production mode:
 
-    grunt start
+    jake start
 
 Or you can start app locally in development mode:
 
     npm start
 
-To see more grunt tasks, run ``grunt --help``. To test this app, run ``npm test``.
+To see more jake tasks, run ``jake``.
+
+    jake start     # forever start
+    jake restart   # forever restart
+    jake stop      # forever stop
+    jake list      # forever list
+
+To see more grunt tasks, run ``grunt --help``.
 
     Available tasks
-            status  Check status of the app.
-           details  Check JSON status of the app.
-        start_only  Start/restart the app.
-         stop_only  Stop the app.
-         kill_only  Kill the app.
-             start  Alias for "status", "start_only", "status" tasks.
-           restart  Alias for "start" task.
-              stop  Alias for "stop_only", "status" tasks.
-              kill  Alias for "kill_only", "status" tasks.
-         menu:show  Show current Weixin menu.
-       menu:update  Update current Weixin menu.
+         menu:show  Show current Weixin menu.                                      
+       menu:update  Update current Weixin menu.      
       menu:destroy  Destroy current Weixin menu.
              token  Update token file.
              coord  Find coordinates.
+
+To test this app, run ``npm test``.
+
+Forever is still used and not to use pm2 for now because pm2 has [process-spawn problem](https://github.com/Unitech/pm2/issues/235) and its cluster mode has [compatibility problems](https://github.com/Unitech/pm2/issues/231) in node v0.10.
 
 Menu
 ----
