@@ -8,9 +8,9 @@
   "main": "app.js",
   "scripts": {
     "start": "node_modules/.bin/nodemon app.js",
-    "test": "node_modules/.bin/nodemon app.js",
-    "wstart": "node_modules\\.bin\\nodemon app.js",
-    "wtest": "node_modules\\.bin\\nodemon app.js"
+    "test": "node_modules/.bin/mocha",
+    "s": "node_modules\\.bin\\nodemon app.js",
+    "t": "node_modules\\.bin\\mocha"
   },
   "repository": {
     "type": "git",

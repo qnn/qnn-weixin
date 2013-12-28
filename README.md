@@ -82,6 +82,8 @@ To see more grunt tasks, run ``grunt --help``.
 
 To test this app, run ``npm test``.
 
+In Windows, available tasks are ``npm run-script s``, ``npm run-script t``.
+
 Forever is still used and not to use pm2 for now because pm2 has [process-spawn problem](https://github.com/Unitech/pm2/issues/235) and its cluster mode has [compatibility problems](https://github.com/Unitech/pm2/issues/231) in node v0.10.
 
 Menu
