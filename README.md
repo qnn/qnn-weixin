@@ -9,6 +9,10 @@ Scan the following QRCode in Weixin to follow QNN:
 
 [![Weixin QRCode](https://raw.github.com/qnn/qnn-weixin/master/public/images/weixin_qrcode.png)](http://weixin.qq.com/r/rnUvN2PEYj4drSdU9yC8)
 
+Please note that this repository is not being actively maintained.
+
+![qnn-weixin](https://f.cloud.github.com/assets/1284703/2060145/165d3070-8bfd-11e3-88bb-d0c586d9a727.png)
+
 Features
 --------
 
